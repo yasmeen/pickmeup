@@ -15,10 +15,9 @@ class CanvasEditorViewController: UIViewController {
     
     @IBOutlet weak var paintButton: UIButton!
     @IBOutlet weak var surfaceLabel: UILabel!
-    @IBOutlet weak var undoButton: UIButton!
     @IBInspectable
     var borderColor : UIColor = UIColor.gray
-    
+    @IBOutlet weak var clearButton: UIButton!
     var lastPoint: CGPoint!
     var isSwiping: Bool!
     var currentColor : RGB!
@@ -64,7 +63,7 @@ class CanvasEditorViewController: UIViewController {
         }
     }
     
-
+    
     //clear last stroke
     @IBAction func clearCanvas() {
         UIGraphicsBeginImageContext(self.canvas.frame.size)
@@ -100,17 +99,17 @@ class CanvasEditorViewController: UIViewController {
         }
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         paintButton.layer.cornerRadius = 10
         paintButton.clipsToBounds = true
         paintButton.layer.borderColor = UIColor.gray.cgColor
         paintButton.layer.borderWidth = 2.0
-        undoButton.layer.borderColor = UIColor.gray.cgColor
-        undoButton.layer.borderWidth = 2.0
-        undoButton.layer.cornerRadius = 10
-        undoButton.clipsToBounds = true
+        clearButton.layer.borderColor = UIColor.gray.cgColor
+        clearButton.layer.borderWidth = 2.0
+        clearButton.layer.cornerRadius = 10
+        clearButton.clipsToBounds = true
         currentColor = colorMapping["black"]
         
         if faceId != nil {
@@ -118,8 +117,8 @@ class CanvasEditorViewController: UIViewController {
         }
     }
     
-
-
+    
+    
     //Touch event listeners
     
     override func touchesBegan(_ touches: Set<UITouch>,
@@ -170,5 +169,5 @@ class CanvasEditorViewController: UIViewController {
             UIGraphicsEndImageContext()
         }
     }
-
+    
 }

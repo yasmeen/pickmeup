@@ -106,9 +106,6 @@
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <state key="normal" title="Clear"/>
-                                <connections>
-                                    <action selector="clearCanvas" destination="hQd-MA-hZp" eventType="touchUpInside" id="O1x-HC-UrY"/>
-                                </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="yhv-JV-3m0">
                                 <rect key="frame" x="38" y="501" width="300" height="50"/>
@@ -210,6 +207,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="canvas" destination="0tU-SK-wrU" id="Ezl-NS-yaK"/>
+                        <outlet property="clearButton" destination="pdd-0X-cVc" id="hrT-rp-gbF"/>
                         <outlet property="paintButton" destination="w40-76-oTw" id="GNX-sQ-bDM"/>
                         <outlet property="surfaceLabel" destination="JVq-UV-uMf" id="VK2-nm-lNm"/>
                         <outlet property="undoButton" destination="pdd-0X-cVc" id="vdc-ns-jFO"/>

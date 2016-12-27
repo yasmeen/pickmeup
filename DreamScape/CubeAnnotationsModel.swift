@@ -50,7 +50,7 @@ class CubeAnnotationsModel {
         .Bottom: GenericFace(shape: Shape.Cube(face: CubeFace.Bottom),
                              recycled: false,
                              material: SCNMaterial())
-        ]
+    ]
     
     //response from canvas editor
     private var responseLoader: canvasResponse?
@@ -68,7 +68,7 @@ class CubeAnnotationsModel {
     }
     
     //public accessor for annotation updates
-    //optional type because user may cancel annotation or experience interruption 
+    //optional type because user may cancel annotation or experience interruption
     var faceUpdate : canvasResponse? {
         get {
             return responseLoader
