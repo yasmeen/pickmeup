@@ -21,6 +21,7 @@
 		C55892091E11CF340041D88A /* FinderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55892081E11CF340041D88A /* FinderViewController.swift */; };
 		C558920B1E11CF450041D88A /* DiscoveryLensViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C558920A1E11CF450041D88A /* DiscoveryLensViewController.swift */; };
 		C558920D1E11EDEF0041D88A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C558920C1E11EDEF0041D88A /* TabBarViewController.swift */; };
+		C55892101E1203DA0041D88A /* CameraDiscoveryLensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C558920F1E1203DA0041D88A /* CameraDiscoveryLensView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		C55892081E11CF340041D88A /* FinderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinderViewController.swift; sourceTree = "<group>"; };
 		C558920A1E11CF450041D88A /* DiscoveryLensViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryLensViewController.swift; sourceTree = "<group>"; };
 		C558920C1E11EDEF0041D88A /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		C558920F1E1203DA0041D88A /* CameraDiscoveryLensView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraDiscoveryLensView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				C558920A1E11CF450041D88A /* DiscoveryLensViewController.swift */,
+				C558920F1E1203DA0041D88A /* CameraDiscoveryLensView.swift */,
 			);
 			name = "Discovery Lens";
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 				C54E4D991E0F8C88005DF00A /* ShapeCreatorViewController.swift in Sources */,
 				C54E4DA11E1068BD005DF00A /* CanvasView.swift in Sources */,
 				C54E4D801E0F847F005DF00A /* AppDelegate.swift in Sources */,
+				C55892101E1203DA0041D88A /* CameraDiscoveryLensView.swift in Sources */,
 				C54E4D9F1E0FBF48005DF00A /* CanvasEditorViewController.swift in Sources */,
 				C55892091E11CF340041D88A /* FinderViewController.swift in Sources */,
 				C54E4D9D1E0FAABE005DF00A /* CubeAnnotationsModel.swift in Sources */,

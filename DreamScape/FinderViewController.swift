@@ -10,6 +10,24 @@ import UIKit
 
 class FinderViewController: UIViewController {
 
+    @IBOutlet var finderSuperView: UIView! {
+        didSet {
+            //set gestures for tab view control
+            let swipeLeftGesture = UISwipeGestureRecognizer (
+                target: self,
+                action: #selector(FinderViewController.tabRight(_:))
+            )
+            swipeLeftGesture.direction = .left
+            finderSuperView.addGestureRecognizer(swipeLeftGesture)
+        }
+    }
+    
+    
+    func tabRight(_ swipeLeft: UISwipeGestureRecognizer) {
+        self.tabBarController?.selectedIndex += 1
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

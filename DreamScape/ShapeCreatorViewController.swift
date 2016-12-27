@@ -21,13 +21,29 @@ class ShapeCreatorViewController: UIViewController {
         }
     }
     
+    @IBOutlet var shapeCreatorSuperView: UIView! {
+        didSet {
+            //tab view controlled by swipe gesture
+            let swipeRightGesture = UISwipeGestureRecognizer (
+                target: self,
+                action: #selector(ShapeCreatorViewController.tabLeft(_:))
+            )
+            swipeRightGesture.direction = .right
+            shapeCreatorSuperView.addGestureRecognizer(swipeRightGesture)
+        }
+    }
     
+    func tabLeft(_ swipeRight: UISwipeGestureRecognizer) {
+        self.tabBarController?.selectedIndex -= 1
+    }
     
     //prototype contains only cube structures
     let shapeModel = CubeAnnotationsModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //preparing materials for fresh cube
+        //TODO: Loading cube up from discovery mode
         if sideSelector != nil {
             sideSelector.scene = SideSelectorScene()
             sideSelector.autoenablesDefaultLighting = true
