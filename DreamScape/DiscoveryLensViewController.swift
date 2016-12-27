@@ -41,7 +41,7 @@ class DiscoveryLensViewController: UIViewController {
     }
     
     
-    @IBOutlet weak var cameraView: UIView!
+    @IBOutlet weak var cameraView: CameraDiscoveryLensView!
     
     func tabLeft(_ swipeRight: UISwipeGestureRecognizer) {
         self.tabBarController?.selectedIndex -= 1

@@ -8,7 +8,9 @@
 
 import UIKit
 
-class CameraDiscoveryLensView: UIImageView {
+//we will eventually move AVFoundation code to this class to encapsulate more complicated 
+//live feed manipulation (incorporating AR)
+class CameraDiscoveryLensView: UIView {
 
 
 }
