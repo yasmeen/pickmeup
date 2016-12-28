@@ -64,7 +64,7 @@ class CanvasEditorViewController: UIViewController {
     }
     
     
-    //clear last stroke
+    //clear canvas of all annotations by replacing fill with default color
     @IBAction func clearCanvas() {
         UIGraphicsBeginImageContext(self.canvas.frame.size)
         UIGraphicsGetCurrentContext()?.setFillColor(UIColor.white.cgColor)
