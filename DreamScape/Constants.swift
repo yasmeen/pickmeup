@@ -15,6 +15,7 @@ public class Constants {
     public static let MIN_SCALE: CGFloat = 0.0
     public static let DEBUG_MODE: Bool = true
     public static let SPOOF_SERVER: Bool = true //for now, this implies we are only working with cubes
+    public static let DEFAULT_BLUE: [Float] = [0.0, 122.0/255.0, 1.0, 1.0]
 
     // MARK: - Generic shape wrappers and helpers
     public enum Shape {

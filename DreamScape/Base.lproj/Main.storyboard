@@ -219,7 +219,7 @@
             </objects>
             <point key="canvasLocation" x="1948" y="26.53673163418291"/>
         </scene>
-        <!--Discovery Lens-->
+        <!--Discover-->
         <scene sceneID="L37-94-ddZ">
             <objects>
                 <viewController id="oHq-xB-Pb8" customClass="DiscoveryLensViewController" customModule="DreamScape" customModuleProvider="target" sceneMemberID="viewController">
@@ -244,7 +244,9 @@
                             <constraint firstItem="MLV-kO-ttS" firstAttribute="bottom" secondItem="Llx-3d-xC2" secondAttribute="top" id="lYr-Ay-GQ4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Discovery Lens" id="cYO-sf-IW3"/>
+                    <tabBarItem key="tabBarItem" title="Discover" image="tab_bar_discovery" selectedImage="tab_bar_discovery" id="cYO-sf-IW3">
+                        <inset key="imageInsets" minX="-5" minY="0.0" maxX="5" maxY="0.0"/>
+                    </tabBarItem>
                     <connections>
                         <outlet property="cameraView" destination="MLV-kO-ttS" id="ggu-xl-6qc"/>
                         <outlet property="discoverySuperView" destination="ye0-OB-6gy" id="TH4-xA-eBs"/>
@@ -258,10 +260,11 @@
         <scene sceneID="TNu-ob-prC">
             <objects>
                 <tabBarController storyboardIdentifier="tabBarController" id="ybB-tg-IH7" customClass="TabBarViewController" customModule="DreamScape" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="h8O-1s-eCC">
+                    <tabBar key="tabBar" autoresizesSubviews="NO" contentMode="scaleAspectFit" itemPositioning="fill" id="h8O-1s-eCC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="WGQ-Cs-mXJ" kind="relationship" relationship="viewControllers" id="sGh-2S-POp"/>
@@ -273,11 +276,11 @@
             </objects>
             <point key="canvasLocation" x="-1466" y="-64"/>
         </scene>
-        <!--Canvas Editor-->
+        <!--Edit-->
         <scene sceneID="UVz-DP-cFA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EIR-1s-yfR" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Canvas Editor" id="Sbg-qU-7TU"/>
+                    <tabBarItem key="tabBarItem" title="Edit" image="tab_bar_editor" selectedImage="tab_bar_editor" id="Sbg-qU-7TU"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="v0I-GU-XfV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -292,7 +295,7 @@
             </objects>
             <point key="canvasLocation" x="-20" y="27"/>
         </scene>
-        <!--Finder-->
+        <!--Find-->
         <scene sceneID="YQD-Gc-7HH">
             <objects>
                 <viewController id="WGQ-Cs-mXJ" customClass="FinderViewController" customModule="DreamScape" customModuleProvider="target" sceneMemberID="viewController">
@@ -305,7 +308,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Finder" id="cEV-Z6-jW0"/>
+                    <tabBarItem key="tabBarItem" title="Find" image="tab_bar_finder" selectedImage="tab_bar_finder" id="cEV-Z6-jW0"/>
                     <connections>
                         <outlet property="finderSuperView" destination="zoa-tn-ebK" id="ZbK-YP-wxq"/>
                     </connections>
@@ -322,5 +325,8 @@
         <image name="picker_green" width="64" height="64"/>
         <image name="picker_red" width="64" height="64"/>
         <image name="picker_yellow" width="64" height="64"/>
+        <image name="tab_bar_discovery" width="29" height="29"/>
+        <image name="tab_bar_editor" width="29" height="29"/>
+        <image name="tab_bar_finder" width="29" height="29"/>
     </resources>
 </document>

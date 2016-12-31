@@ -11,9 +11,9 @@ import UIKit
 class TabBarViewController: UITabBarController {
     var initialLaunch = true
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -22,6 +22,9 @@ class TabBarViewController: UITabBarController {
             initialLaunch = false
             self.selectedIndex = 1
         }
+        self.tabBar.barTintColor = UIColor.clear
+        self.tabBar.backgroundImage = UIImage()
+        self.tabBar.shadowImage = UIImage()
     }
 
     /*

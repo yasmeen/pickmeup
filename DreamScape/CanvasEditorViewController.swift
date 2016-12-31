@@ -42,6 +42,17 @@ class CanvasEditorViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //tab bar item appearance under this specific controller
+        self.tabBarController?.tabBar.tintColor = UIColor(
+            colorLiteralRed: Constants.DEFAULT_BLUE[0],
+            green: Constants.DEFAULT_BLUE[1],
+            blue: Constants.DEFAULT_BLUE[2],
+            alpha: Constants.DEFAULT_BLUE[3])
+        self.tabBarController?.tabBar.unselectedItemTintColor = UIColor.gray
+    }
+    
     //restore the canvas to the selected material -- default/blank is white
     //precondition: the model has been loaded with all six materials owned by the cube
     func restorePreviousMask() {

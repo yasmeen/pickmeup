@@ -30,9 +30,22 @@ class FinderViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
+        
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //tab bar item appearance under this specific controller
+        self.tabBarController?.tabBar.tintColor = UIColor(
+            colorLiteralRed: Constants.DEFAULT_BLUE[0],
+            green: Constants.DEFAULT_BLUE[1],
+            blue: Constants.DEFAULT_BLUE[2],
+            alpha: Constants.DEFAULT_BLUE[3])
+        self.tabBarController?.tabBar.unselectedItemTintColor = UIColor.gray
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
