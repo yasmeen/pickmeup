@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SceneKit
 
 class CanvasEditorViewController: UIViewController {
     
@@ -31,12 +32,12 @@ class CanvasEditorViewController: UIViewController {
     }
     
     //precondition: the model has been loaded with all six materials owned by the cube
-    var currentFace : CubeAnnotationsModel.CubeFace {
+    var currentFace : Constants.CubeFace {
         get {
             if faceId != nil {
-                return CubeAnnotationsModel.CubeFace(rawValue: faceId!)!
+                return Constants.CubeFace(rawValue: faceId!)!
             } else {
-                return CubeAnnotationsModel.CubeFace(rawValue: 0)!
+                return Constants.CubeFace(rawValue: 0)!
             }
         }
     }
@@ -57,6 +58,28 @@ class CanvasEditorViewController: UIViewController {
     @IBAction func submitAnnotation(_ sender: UIButton) {
         if faceId != nil && canvas != nil {
             cubeModel?.setFace(currentFace, with: canvas.image!)
+            
+            if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
+                print("DEBUG INFO- Material changed in Discovery Lens Model")
+                let lensModel: DiscoveryLensModel = DiscoveryLensModel()
+                var materials: [SCNMaterial] = Array()
+                //appending manually to ensure consistency
+                materials.append(cubeModel!.cubeTextures[.Front]!.material)
+                materials.append(cubeModel!.cubeTextures[.Right]!.material)
+                materials.append(cubeModel!.cubeTextures[.Back]!.material)
+                materials.append(cubeModel!.cubeTextures[.Left]!.material)
+                materials.append(cubeModel!.cubeTextures[.Top]!.material)
+                materials.append(cubeModel!.cubeTextures[.Bottom]!.material)
+                
+                let newShape = DiscoveryLensModel.DiscoveredShape(
+                    shape: Constants.Shape.Cube,
+                    ofSize: CGFloat(1.0),
+                    withMaterials: materials)
+                
+                lensModel.currentDiscoveredShape = newShape
+                DiscoveryLensViewController.updateModel(discoveryLensModel: lensModel)
+            }
+            
         }
         if let navController = self.navigationController {
             navController.popViewController(animated: true)

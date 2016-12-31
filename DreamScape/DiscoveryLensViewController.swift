@@ -9,14 +9,20 @@
 import UIKit
 import MobileCoreServices
 import AVFoundation
+import SceneKit
+
+//TODO: size of the scene's frame is interfering with the swipe gestures
 
 class DiscoveryLensViewController: UIViewController {
+    
+    // change to let and non-static when server-side code is written
+    static var discoveryLensModel: DiscoveryLensModel = DiscoveryLensModel()
     
     //session feed state
     var captureSession = AVCaptureSession()
     var sessionOutput = AVCapturePhotoOutput()
     var previewLayer = AVCaptureVideoPreviewLayer()
-    
+    var sceneView = SCNView()
     
     @IBOutlet var discoverySuperView: UIView! {
         didSet {
@@ -56,11 +62,22 @@ class DiscoveryLensViewController: UIViewController {
     }
     
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cameraViewOverlaySession()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Constants.SPOOF_SERVER {
+            shapeDiscovered()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        sceneView.removeFromSuperview()
     }
     
     
@@ -73,7 +90,7 @@ class DiscoveryLensViewController: UIViewController {
             if device.position == AVCaptureDevicePosition.back {
                 
                 do {
-                    
+
                     let input = try AVCaptureDeviceInput(device: device)
                     
                     if captureSession.canAddInput(input){
@@ -81,17 +98,13 @@ class DiscoveryLensViewController: UIViewController {
                         
                         if captureSession.canAddOutput(sessionOutput){
                             captureSession.addOutput(sessionOutput)
-                            
                             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
                             previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                             previewLayer.connection.videoOrientation = .portrait
-                            
                             cameraView.layer.addSublayer(previewLayer)
                             previewLayer.position = CGPoint (x: self.cameraView.frame.width / 2, y: self.cameraView.frame.height / 2)
                             previewLayer.bounds = cameraView.frame
-                            
                             captureSession.startRunning()
-                            
                         }
                     }
                     
@@ -99,6 +112,57 @@ class DiscoveryLensViewController: UIViewController {
             }
         }
     }
+    
+    
+    //callback from server request when shape or landmark proximity is detected
+    //when testing this controller and in the protoype (before server requests) this will be called 
+    //to create a static cube in viewDidLoad
+    func shapeDiscovered() {
+        if let shape = DiscoveryLensViewController.discoveryLensModel.currentDiscoveredShape {
+            if(Constants.DEBUG_MODE) {
+                print("DEBUG INFO- Cube loaded from Canvas Editor")
+            }
+            //we create the scene view, which will serve as a container for the actual scene
+            sceneView = SCNView()
+            sceneView.frame = self.view.bounds
+            sceneView.backgroundColor = UIColor.clear
+            sceneView.autoenablesDefaultLighting = true
+            sceneView.allowsCameraControl = true //in the future, we may want to disable this in discovery mode
+            self.view.addSubview(sceneView)
+            sceneView.scene = shape.scene
+        //loads blank stub shape
+        } else if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
+            print("DEBUG INFO- Stub cube loaded into camera view")
+            //we create the scene view, which will serve as a container for the actual scene
+            sceneView = SCNView()
+            sceneView.frame = self.view.bounds
+            sceneView.backgroundColor = UIColor.clear
+            sceneView.autoenablesDefaultLighting = true
+            sceneView.allowsCameraControl = true //in the future, we may want to disable this in discovery mode
+            self.view.addSubview(sceneView)
+            sceneView.scene = DiscoveryScene(scale: 1.0, withShape: Constants.Shape.Cube, withMaterials: [])
+        } else {
+            print("No shape could be fetched in the DiscoveryLens Controller from the DiscoveryLens model")
+            
+        }
+    }
+    
+    //converts the server response format of a shape into our model's format
+    func updateModelShape() {
+        //pass
+        
+    }
+    
+    //only used for server spoof mode to load shapes in from the Canvas Editor's model
+    //communication of this form is not proper and will be deleted once the server-side code is written
+    public static func updateModel(discoveryLensModel: DiscoveryLensModel) {
+        if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
+            DiscoveryLensViewController.discoveryLensModel = discoveryLensModel
+        } else {
+            print("Error- This model to model communication is not permitted")
+        }
+    }
+    
     
     
 }

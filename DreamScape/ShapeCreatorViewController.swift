@@ -63,7 +63,6 @@ class ShapeCreatorViewController: UIViewController {
             }
             
         }
-        
     }
     
     //the user taps on a face (side) of the shape to edit it
@@ -71,7 +70,7 @@ class ShapeCreatorViewController: UIViewController {
         let callingView = gesture.location(in: sideSelector)
         let hitResults = sideSelector.hitTest(callingView)
         if let tappedFace = hitResults.first{
-            let face = CubeAnnotationsModel.CubeFace(rawValue: tappedFace.geometryIndex)
+            let face = Constants.CubeFace(rawValue: tappedFace.geometryIndex)
             if face != nil {
                 performSegue(withIdentifier: "annotateShape", sender: tappedFace)
             }
@@ -87,5 +86,7 @@ class ShapeCreatorViewController: UIViewController {
             }
         }
     }
+    
+    
     
 }
