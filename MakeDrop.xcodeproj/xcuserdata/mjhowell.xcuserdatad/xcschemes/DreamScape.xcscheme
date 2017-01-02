@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C54E4D7B1E0F847F005DF00A"
-               BuildableName = "DreamScape.app"
-               BlueprintName = "DreamScape"
-               ReferencedContainer = "container:DreamScape.xcodeproj">
+               BuildableName = "MakeDrop.app"
+               BlueprintName = "MakeDrop"
+               ReferencedContainer = "container:MakeDrop.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C54E4D7B1E0F847F005DF00A"
-            BuildableName = "DreamScape.app"
-            BlueprintName = "DreamScape"
-            ReferencedContainer = "container:DreamScape.xcodeproj">
+            BuildableName = "MakeDrop.app"
+            BlueprintName = "MakeDrop"
+            ReferencedContainer = "container:MakeDrop.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C54E4D7B1E0F847F005DF00A"
-            BuildableName = "DreamScape.app"
-            BlueprintName = "DreamScape"
-            ReferencedContainer = "container:DreamScape.xcodeproj">
+            BuildableName = "MakeDrop.app"
+            BlueprintName = "MakeDrop"
+            ReferencedContainer = "container:MakeDrop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C54E4D7B1E0F847F005DF00A"
-            BuildableName = "DreamScape.app"
-            BlueprintName = "DreamScape"
-            ReferencedContainer = "container:DreamScape.xcodeproj">
+            BuildableName = "MakeDrop.app"
+            BlueprintName = "MakeDrop"
+            ReferencedContainer = "container:MakeDrop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

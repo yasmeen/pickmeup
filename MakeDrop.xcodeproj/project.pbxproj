@@ -33,7 +33,7 @@
 		C5259A681E170261003001E3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5259A6A1E1712B8003001E3 /* DiscoveryScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryScene.swift; sourceTree = "<group>"; };
 		C545CE2E1E1793B900278C2B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		C54E4D7C1E0F847F005DF00A /* DreamScape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DreamScape.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C54E4D7C1E0F847F005DF00A /* MakeDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54E4D7F1E0F847F005DF00A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C54E4D841E0F847F005DF00A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C54E4D871E0F847F005DF00A /* DreamScape.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DreamScape.xcdatamodel; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		C54E4D731E0F847F005DF00A = {
 			isa = PBXGroup;
 			children = (
-				C54E4D7E1E0F847F005DF00A /* DreamScape */,
+				C54E4D7E1E0F847F005DF00A /* MakeDrop */,
 				C54E4D7D1E0F847F005DF00A /* Products */,
 				C54E4D941E0F8AA5005DF00A /* Frameworks */,
 			);
@@ -77,12 +77,12 @@
 		C54E4D7D1E0F847F005DF00A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C54E4D7C1E0F847F005DF00A /* DreamScape.app */,
+				C54E4D7C1E0F847F005DF00A /* MakeDrop.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C54E4D7E1E0F847F005DF00A /* DreamScape */ = {
+		C54E4D7E1E0F847F005DF00A /* MakeDrop */ = {
 			isa = PBXGroup;
 			children = (
 				C558920E1E11EEA70041D88A /* General Architecture */,
@@ -92,6 +92,7 @@
 				C54E4D971E0F8AC3005DF00A /* Supporting Files */,
 				C54E4D831E0F847F005DF00A /* Main.storyboard */,
 			);
+			name = MakeDrop;
 			path = DreamScape;
 			sourceTree = "<group>";
 		};
@@ -159,9 +160,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C54E4D7B1E0F847F005DF00A /* DreamScape */ = {
+		C54E4D7B1E0F847F005DF00A /* MakeDrop */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C54E4D911E0F847F005DF00A /* Build configuration list for PBXNativeTarget "DreamScape" */;
+			buildConfigurationList = C54E4D911E0F847F005DF00A /* Build configuration list for PBXNativeTarget "MakeDrop" */;
 			buildPhases = (
 				C54E4D781E0F847F005DF00A /* Sources */,
 				C54E4D791E0F847F005DF00A /* Frameworks */,
@@ -171,9 +172,9 @@
 			);
 			dependencies = (
 			);
-			name = DreamScape;
+			name = MakeDrop;
 			productName = DreamScape;
-			productReference = C54E4D7C1E0F847F005DF00A /* DreamScape.app */;
+			productReference = C54E4D7C1E0F847F005DF00A /* MakeDrop.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -193,7 +194,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C54E4D771E0F847F005DF00A /* Build configuration list for PBXProject "DreamScape" */;
+			buildConfigurationList = C54E4D771E0F847F005DF00A /* Build configuration list for PBXProject "MakeDrop" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -206,7 +207,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C54E4D7B1E0F847F005DF00A /* DreamScape */,
+				C54E4D7B1E0F847F005DF00A /* MakeDrop */,
 			);
 		};
 /* End PBXProject section */
@@ -368,7 +369,7 @@
 				DEVELOPMENT_TEAM = BYRK5RUS4U;
 				INFOPLIST_FILE = DreamScape/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Morgan.DreamScape;
+				PRODUCT_BUNDLE_IDENTIFIER = Morgan.MakeDrop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -381,7 +382,7 @@
 				DEVELOPMENT_TEAM = BYRK5RUS4U;
 				INFOPLIST_FILE = DreamScape/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Morgan.DreamScape;
+				PRODUCT_BUNDLE_IDENTIFIER = Morgan.MakeDrop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -390,7 +391,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C54E4D771E0F847F005DF00A /* Build configuration list for PBXProject "DreamScape" */ = {
+		C54E4D771E0F847F005DF00A /* Build configuration list for PBXProject "MakeDrop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C54E4D8F1E0F847F005DF00A /* Debug */,
@@ -399,7 +400,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C54E4D911E0F847F005DF00A /* Build configuration list for PBXNativeTarget "DreamScape" */ = {
+		C54E4D911E0F847F005DF00A /* Build configuration list for PBXNativeTarget "MakeDrop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C54E4D921E0F847F005DF00A /* Debug */,

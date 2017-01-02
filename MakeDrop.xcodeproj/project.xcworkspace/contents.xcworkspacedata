@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:DreamScape.xcodeproj">
+      location = "self:/Users/mjhowell/DEV/MakeDrop/Make-Drop/MakeDrop.xcodeproj">
    </FileRef>
 </Workspace>
