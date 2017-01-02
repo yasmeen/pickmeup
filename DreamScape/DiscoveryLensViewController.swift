@@ -74,32 +74,6 @@ class DiscoveryLensViewController: UIViewController {
         self.tabBarController?.selectedIndex += 1
     }
     
-//    func motionRefresh(_ sender: Any?) {
-//        
-//        let quat: CMQuaternion = self.motionManager.deviceMotion!.attitude.quaternion
-//        let yaw: Double = asin(2*(quat.x*quat.z - quat.w*quat.y));
-//        
-//        //Kalman-filter implementation for smoother yaw values
-//        if (self.motionLastYaw == 0) {
-//            self.motionLastYaw = Float(yaw);
-//        }
-//        
-//        let q: Float = 0.1;   // process noise
-//        let r: Float = 0.1;   // sensor noise
-//        var p: Float = 0.1;   // estimated error
-//        var k: Float = 0.5;   // kalman filter gain
-//        
-//        var x: Float = self.motionLastYaw ?? 0.0;
-//        p = p + q;
-//        k = p / (p + r);
-//        x = x + k*(Float(yaw) - x);
-//        p = (1 - k)*p;
-//        self.motionLastYaw = x;
-//        print("YAW: \(self.motionLastYaw)")
-//        
-//    }
-    
-    
     func motionRefresh(gyroData: CMGyroData?, hasError error: Error?) {
         print(gyroData?.rotationRate.y ?? 0.0)
     }
@@ -126,92 +100,6 @@ class DiscoveryLensViewController: UIViewController {
             DiscoveryLensViewController.sceneKitCamera?.orientation = quaternion
             SCNTransaction.commit()
         }
-        
-        //self.motionManager.deviceMotionUpdateInterval = 0.02 // 50Hz
-        
-//        self.motionDisplayLink = CADisplayLink(target: self,
-//                                               selector: #selector(DiscoveryLensViewController.motionRefresh(_:)))
-//        
-//        self.motionDisplayLink?.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
-//        
-//        if self.motionManager.isDeviceMotionAvailable {
-//            self.motionManager.startDeviceMotionUpdates(using: CMAttitudeReferenceFrame.xArbitraryZVertical)
-//        }
-        
-//        if self.motionManager.isGyroAvailable {
-//            self.motionManager.gyroUpdateInterval = 0.1
-//            self.motionManager.startGyroUpdates(to: OperationQueue.main, withHandler: self.motionRefresh)
-//            
-//        }
-        
-        
-        
-//        if self.motionManager.isAccelerometerAvailable {
-//            self.motionManager.accelerometerUpdateInterval = 0.01
-//            self.motionManager.startAccelerometerUpdates(to: OperationQueue.main) {
-//                [weak self] (data: CMAccelerometerData?, error: Error?) in
-//                if let acceleration = data?.acceleration {
-//                    let rotation = atan2(acceleration.x, acceleration.y) - M_PI
-//                    
-//                    
-//                    if let nodes : [SCNNode] = DiscoveryLensViewController.discoveredShapes {
-//                        for node : SCNNode in nodes {
-//                            //node.transform = SCNMatrix4MakeRotation(<#T##angle: Float##Float#>, <#T##x: Float##Float#>, <#T##y: Float##Float#>, <#T##z: Float##Float#>)
-//                                //CGAffineTransform(rotationAngle: CGFloat(rotation))
-//                            
-//                            //node.eulerAngles = SCNVector3(
-//                        }
-//                    }
-//                    
-//                    
-//                }
-//            }
-//        }
-        
-//        if self.motionManager.isDeviceMotionAvailable {
-//            self.motionManager.deviceMotionUpdateInterval = 0.01
-//            self.motionManager.startDeviceMotionUpdates(to: OperationQueue.main) {
-//                /*[weak self]*/ (motion: CMDeviceMotion?, error: Error?) in
-//                
-//                if let currentAttitude = motion?.attitude {
-//                    let roll = Float(currentAttitude.roll) + (0.5*Float.pi)
-//                    let yaw = Float(currentAttitude.yaw)
-//                    let pitch = Float(currentAttitude.pitch)
-//                    print("roll \(roll)")
-//                    print("yaw \(yaw)")
-//                    print("pitch \(pitch)")
-//                    
-//                    DiscoveryLensViewController.sceneKitCamera!.eulerAngles = SCNVector3(
-//                        x: -roll*0.25,
-//                        y: yaw*0.25,
-//                        z: -pitch*0.25)
-//                    
-//                } else {
-//                    print("Error unwrapping motion")
-//                }
-        
-        
-//                if let gravity = data?.gravity {
-//                        print("x: \(gravity.x)")
-//                        print("y: \(gravity.y)")
-//                        print("z: \(gravity.z)")
-//
-//                    if let gravity = data?.gravity {
-//                        let rotation = Float(atan2(gravity.x, gravity.y)) - Float.pi
-//                        
-//                        self?.imageView.transform = CGAffineTransform(rotationAngle: CGFloat(rotation))
-//                        
-//
-//                    } else {
-//                        //TODO: Add an option to play in Non-AR mode
-//                        print("Error retrieving gravity")
-//                    }
-//            }
-//        }
-        
-        
-        
-
     }
     
     
