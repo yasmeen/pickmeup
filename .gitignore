@@ -12,13 +12,12 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*
-!/log/.keep
-/tmp
-/tmp/*
+/MakeDropServer/log/*
+/MakeDropServer//log/.keep
+/MakeDropServer/tmp/*
 
 # Don't share secret keys with the publis
-/config/secrets.yml
+/MakeDropServer/config/secrets.yml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
