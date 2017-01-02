@@ -1,0 +1,11 @@
+branch-defaults:
+  default:
+    environment: dev-env
+    group_suffix: null
+global:
+  application_name: MakeDropServer
+  default_ec2_keyname: null
+  default_platform: Ruby
+  default_region: us-west-2
+  profile: eb-cli
+  sc: null

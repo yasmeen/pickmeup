@@ -15,6 +15,10 @@
 /log/*
 !/log/.keep
 /tmp
+/tmp/*
+
+# Don't share secret keys with the publis
+/config/secrets.yml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
