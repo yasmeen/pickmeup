@@ -1,0 +1,10 @@
+<h1>S3 Image app</h1>
+ 
+<%= link_to "Add new material to S3", new_material_path %>
+ 
+<br>
+ 
+<% @materials.each do |material| %>
+	<%= material.geometry_index%>
+	<%= image_tag material.image.url(:med) %>
+<% end %>

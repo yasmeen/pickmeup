@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Shapes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Owner</th>
+      <th>Type</th>
+      <th>Face count</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>Created at</th>
+      <th>Public</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shapes.each do |shape| %>
+      <tr>
+        <td><%= shape.owner %></td>
+        <td><%= shape.type %></td>
+        <td><%= shape.face_count %></td>
+        <td><%= shape.latitude %></td>
+        <td><%= shape.longitude %></td>
+        <td><%= shape.created_at %></td>
+        <td><%= shape.public %></td>
+        <td><%= link_to 'Show', shape %></td>
+        <td><%= link_to 'Edit', edit_shape_path(shape) %></td>
+        <td><%= link_to 'Destroy', shape, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Shape', new_shape_path %>

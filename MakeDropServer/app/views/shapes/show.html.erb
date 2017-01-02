@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @shape.owner %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @shape.type %>
+</p>
+
+<p>
+  <strong>Face count:</strong>
+  <%= @shape.face_count %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @shape.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @shape.longitude %>
+</p>
+
+<p>
+  <strong>Created at:</strong>
+  <%= @shape.created_at %>
+</p>
+
+<p>
+  <strong>Public:</strong>
+  <%= @shape.public %>
+</p>
+
+<%= link_to 'Edit', edit_shape_path(@shape) %> |
+<%= link_to 'Back', shapes_path %>

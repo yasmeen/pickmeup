@@ -1,0 +1,22 @@
+<%= form_for @material do |f| %>
+	<p>
+    	<%= f.label :geometry_index %>
+    	<%= f.text_field :geometry_index  %>
+  	</p>
+
+  	<p>
+    	<%= f.label :shape_id %>
+    	<%= f.text_field :shape_id %>
+  	</p>
+
+  	<p>
+    	<%= f.label :created_at %>
+    	<%= f.datetime_local_field :created_at %>
+  	</p>
+
+  	<p>
+    	<%= f.file_field :image %>
+  	</p>
+ 
+  	<%= f.submit %>
+<% end %>

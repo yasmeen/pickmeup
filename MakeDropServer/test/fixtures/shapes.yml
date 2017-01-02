@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner: MyString
+  type: 
+  face_count: 9.99
+  latitude: 1.5
+  longitude: 1.5
+  created_at: 2017-01-02 03:00:41
+  public: false
+
+two:
+  owner: MyString
+  type: 
+  face_count: 9.99
+  latitude: 1.5
+  longitude: 1.5
+  created_at: 2017-01-02 03:00:41
+  public: false

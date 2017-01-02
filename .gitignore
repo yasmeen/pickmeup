@@ -17,7 +17,7 @@
 /MakeDropServer/tmp/*
 
 # Don't share secret keys with the publis
-/MakeDropServer/config/secrets.yml
+/MakeDropServer/config/*.yml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
