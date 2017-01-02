@@ -33,23 +33,47 @@ class DiscoveryScene: SCNScene {
                 length: Constants.defaultCubeDimensions["length"]! * scale,
                 chamferRadius: Constants.defaultCubeDimensions["chamferRadius"]!)
             shapeGeometry!.materials = materials
+            
         default:
             print("ERROR - Shape has been discovered that has yet to be implemented")
         }
         
-        
+        //animation denoting an "undiscovered" shape
+        //once the shape is discovered, rotational axis is reset and animation stops
         let shapeNode = SCNNode(geometry: shapeGeometry!)
-
+        //edit the matrix below to tilt the initial angle of the shape
+        //shapeNode.pivot = SCNMatrix4MakeRotation(Float.pi, 50, 20, 5)
+        let spin = CABasicAnimation(keyPath: "rotation")
+        // Use from-to to explicitly make a full rotation around z
+        spin.fromValue = NSValue(scnVector4: SCNVector4(x: 0, y: 0, z: 0, w: 0))
+        spin.toValue = NSValue(scnVector4: SCNVector4(x: 0, y: 5, z: 0, w: Float.pi * 2))
+        spin.duration = 3
+        spin.repeatCount = .infinity
+        shapeNode.addAnimation(spin, forKey: "spin around")
         
         //constaining the camera settings to avoid the gimbal lock problem (unintended offset of the rotational axis)
-        let constraint = SCNLookAtConstraint(target: shapeNode)
-        constraint.isGimbalLockEnabled = true
-        cameraNode.constraints = [constraint]
+        //let constraint = SCNLookAtConstraint(target: shapeNode)
+        //constraint.isGimbalLockEnabled = true
+        //cameraNode.constraints = [constraint]
         
         //constructing node hierachy
         self.rootNode.addChildNode(cameraNode)
         self.rootNode.addChildNode(shapeNode)
+        DiscoveryLensViewController.addCameraNode(camera: cameraNode)
+        DiscoveryLensViewController.addDiscoveredShapeNode(shape: shapeNode)
     }
+    
+    convenience init(scale: CGFloat, withShape shape: Constants.Shape, withImages images: [UIImage]) {
+        var materials: [SCNMaterial] = Array()
+        for image: UIImage in images {
+            let material: SCNMaterial = SCNMaterial()
+            material.diffuse.contents = image
+            materials.append(material)
+        }
+        
+        self.init(scale: scale, withShape: shape, withMaterials: materials)
+    }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -10,7 +10,7 @@ import UIKit
 
 public class Constants {
     
-    // MARK: - Generic shape wrappers and helpers
+    // MARK: - value constants
     public static let MAX_SCALE: CGFloat = 100.0
     public static let MIN_SCALE: CGFloat = 0.0
     public static let DEBUG_MODE: Bool = true
@@ -54,9 +54,9 @@ public class Constants {
     ]
     
     public static let defaultCameraPosition: Dictionary<String, Float> = [
-        "x": -3.0,
-        "y": 3.0,
-        "z": 10.0,
+        "x": 0,
+        "y": 0,
+        "z": 15.0,
     ]
     
 }

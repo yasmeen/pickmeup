@@ -10,6 +10,7 @@
 		C5259A671E16FFEA003001E3 /* DiscoveryLensModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5259A661E16FFEA003001E3 /* DiscoveryLensModel.swift */; };
 		C5259A691E170261003001E3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5259A681E170261003001E3 /* Constants.swift */; };
 		C5259A6B1E1712B8003001E3 /* DiscoveryScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5259A6A1E1712B8003001E3 /* DiscoveryScene.swift */; };
+		C545CE2F1E1793B900278C2B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C545CE2E1E1793B900278C2B /* MapKit.framework */; };
 		C54E4D801E0F847F005DF00A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54E4D7F1E0F847F005DF00A /* AppDelegate.swift */; };
 		C54E4D851E0F847F005DF00A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C54E4D831E0F847F005DF00A /* Main.storyboard */; };
 		C54E4D881E0F847F005DF00A /* DreamScape.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C54E4D861E0F847F005DF00A /* DreamScape.xcdatamodeld */; };
@@ -31,6 +32,7 @@
 		C5259A661E16FFEA003001E3 /* DiscoveryLensModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryLensModel.swift; sourceTree = "<group>"; };
 		C5259A681E170261003001E3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C5259A6A1E1712B8003001E3 /* DiscoveryScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryScene.swift; sourceTree = "<group>"; };
+		C545CE2E1E1793B900278C2B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C54E4D7C1E0F847F005DF00A /* DreamScape.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DreamScape.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C54E4D7F1E0F847F005DF00A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C54E4D841E0F847F005DF00A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C545CE2F1E1793B900278C2B /* MapKit.framework in Frameworks */,
 				C54E4D961E0F8AA5005DF00A /* SceneKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +98,7 @@
 		C54E4D941E0F8AA5005DF00A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C545CE2E1E1793B900278C2B /* MapKit.framework */,
 				C54E4D951E0F8AA5005DF00A /* SceneKit.framework */,
 			);
 			name = Frameworks;

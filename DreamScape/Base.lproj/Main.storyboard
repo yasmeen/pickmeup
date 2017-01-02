@@ -306,16 +306,28 @@
                     <view key="view" contentMode="scaleToFill" id="zoa-tn-ebK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zJZ-T4-CVg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zJZ-T4-CVg" firstAttribute="top" secondItem="zoa-tn-ebK" secondAttribute="top" id="BvD-Ki-oF0"/>
+                            <constraint firstAttribute="bottom" secondItem="zJZ-T4-CVg" secondAttribute="bottom" id="K4R-yW-bHG"/>
+                            <constraint firstItem="zJZ-T4-CVg" firstAttribute="leading" secondItem="zoa-tn-ebK" secondAttribute="leading" id="nic-9F-GwQ"/>
+                            <constraint firstAttribute="trailing" secondItem="zJZ-T4-CVg" secondAttribute="trailing" id="oB1-F8-HcY"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Find" image="tab_bar_finder" selectedImage="tab_bar_finder" id="cEV-Z6-jW0"/>
                     <connections>
+                        <outlet property="finderMapView" destination="zJZ-T4-CVg" id="aOT-Vl-Ngp"/>
                         <outlet property="finderSuperView" destination="zoa-tn-ebK" id="ZbK-YP-wxq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Ub-1i-wcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-20" y="833"/>
+            <point key="canvasLocation" x="-20" y="832.53373313343332"/>
         </scene>
     </scenes>
     <resources>

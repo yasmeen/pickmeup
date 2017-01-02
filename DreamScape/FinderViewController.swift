@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import MapKit
 
 class FinderViewController: UIViewController {
 
+    @IBOutlet weak var finderMapView: MKMapView!
+    
     @IBOutlet var finderSuperView: UIView! {
         didSet {
             //set gestures for tab view control
