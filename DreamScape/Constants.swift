@@ -18,9 +18,12 @@ public class Constants {
     public static let SPOOF_SERVER: Bool = true //for now, this implies we are only working with cubes
     public static let DEFAULT_BLUE: [Float] = [0.0, 122.0/255.0, 1.0, 1.0]
     public static let CUBE_FACE_DIMENSION: Int = 300 //fresh cubes are initialized with 300x300 white materials
+    
+    // MARK: - Make & Drop v1 API endpoints
+    public static let DROP_SHAPE_ENDPOINT = "http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/drop_shape"
 
     // MARK: - Generic shape wrappers and helpers
-    public enum Shape {
+    public enum Shape : String {
         case Cube
         case RectangularPrism
         case SquarePyramid

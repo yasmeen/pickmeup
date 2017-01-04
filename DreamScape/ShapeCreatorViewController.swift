@@ -119,21 +119,68 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
         }
     }
     
-//    func prepareJSONDropPost(latitude: String, longitude longitude: String, withShape shape: )
-//    
-//    func makeDropAPIRequestOnCurrentCube() {
-//        let jsonPost: Dictionary<String, String> = prepareJSONDropPost(
-//            latitude:
-//            longitude:
-//            withShape:
-//            hasSettings: false)
-//        
-//    }
+    func prepareJSONDropPost(latitude lat: String, longitude long: String,
+                             withShape shape: Constants.filledStructure, hasSettings settings: Bool) -> Data? {
+        var jsonBody = Dictionary<String, String>()
+        jsonBody["latitude"] = lat
+        jsonBody["longitude"] = long
+        jsonBody["type"] = shape.shape.rawValue
+        jsonBody["face_count"] = String(shape.faceCount)
+        jsonBody["created_at"] = "TODO"
+        jsonBody["public"] = "true"
+        jsonBody["owner"] = "TODO"
+        let jsonDict: [String: Any] = ["title": "drop_structure", "dict": jsonBody]
+        var jsonData: Data?
+        
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: jsonDict, options: .prettyPrinted)
+        } catch {
+            print("ERROR - Formatting JSON for drop request")
+        }
+       
+        return jsonData
+    }
+    
+    func makeDropAPIRequestOnCurrentCube() {
+        //dropping at current location
+        //TODO: option to drop remotely (passing in lat and long here for remote location)
+        let jsonData = prepareJSONDropPost(
+            latitude: GlobalResources.Location.lat,
+            longitude: GlobalResources.Location.long,
+            withShape: shapeModel.currentShape,
+            hasSettings: false)
+        
+        if jsonData != nil {
+            let url: URL = NSURL(string: Constants.DROP_SHAPE_ENDPOINT)! as URL
+            let request = NSMutableURLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = jsonData
+            DispatchQueue.global(qos: .userInitiated).async {
+                let task = URLSession.shared.dataTask(with: request as URLRequest) { data,response,error in
+                    if error != nil{
+                        print("ERROR- \(error?.localizedDescription)")
+                        return
+                    }
+                    do {
+                        let response = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                        DispatchQueue.main.async {
+                            print("RESPONSE: \(response)")
+                        }
+                        
+                    } catch {
+                        print("ERROR - Deserializing the response from the drop request")
+                    }
+                }
+                task.resume()
+            }
+            
+        }
+    }
     
     func dropShape(_ swipeRight: UISwipeGestureRecognizer) {
         if ShapeCreatorViewController.shapeInCanvas != nil {
             animateShapeInCanvasBeingThrown()
-            //makeDropAPIRequestOnCurrentCube()
+            makeDropAPIRequestOnCurrentCube()
         }
     }
     

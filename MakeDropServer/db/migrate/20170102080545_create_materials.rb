@@ -2,7 +2,7 @@ class CreateMaterials < ActiveRecord::Migration
   def change
     create_table :materials do |t|
       t.integer :shape_id
-      t.attachment :image
+      #t.attachment :image
       t.integer :geometry_index
       t.datetime :created_at
 
