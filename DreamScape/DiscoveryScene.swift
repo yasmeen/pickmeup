@@ -73,6 +73,8 @@ class DiscoveryScene: SCNScene {
         
         self.init(scale: scale, withShape: shape, withMaterials: materials)
     }
+    
+    //TODO: INIT that takes multiple shapes, with orientations, so they can all be set in the scene
 
     
     required init?(coder aDecoder: NSCoder) {

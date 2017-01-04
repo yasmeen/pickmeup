@@ -16,7 +16,8 @@ import CoreMotion
 
 class DiscoveryLensViewController: UIViewController {
     
-    // change to let and non-static when server-side code is written
+    //initially contains no discovered shapes, however shapes will eventually populate according to user proximity
+    //struct for now because of server spoofing, once the API calls can be made, this below should be an instance variable
     static var discoveryLensModel: DiscoveryLensModel = DiscoveryLensModel()
     
     //session feed state
@@ -90,6 +91,10 @@ class DiscoveryLensViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        startSceneKitReferenceConversion()
+    }
+    
+    func startSceneKitReferenceConversion() {
         self.motionManager.startDeviceMotionUpdates(to: motionQueue) {
             [weak self] (motion: CMDeviceMotion?, error: Error?) in
             let attitude: CMAttitude = motion!.attitude
@@ -106,8 +111,6 @@ class DiscoveryLensViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         cameraViewOverlaySession()
-        //sending test image views to front
-        //cameraView.bringSubview(toFront: imageView)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -164,26 +167,28 @@ class DiscoveryLensViewController: UIViewController {
             }
         }
     }
+    
     //callback from server request when shape or landmark proximity is detected
     //when testing this controller and in the protoype (before server requests) this will be called 
     //to create a static cube in viewDidLoad
     func shapeDiscovered() {
-        if let shape = DiscoveryLensViewController.discoveryLensModel.currentDiscoveredShape {
-            if(Constants.DEBUG_MODE) {
+        if DiscoveryLensViewController.discoveryLensModel.hasShapesInFieldOfView(){
+            //under debugging and server spoof mode, we simply load the shape that is currently in the editor
+            if(Constants.DEBUG_MODE && Constants.SPOOF_SERVER) {
                 print("DEBUG INFO- Cube loaded from Canvas Editor")
+                sceneView = SCNView()
+                sceneView.frame = self.view.bounds
+                sceneView.backgroundColor = UIColor.clear
+                sceneView.autoenablesDefaultLighting = true
+                sceneView.allowsCameraControl = true //in the future, we may want to disable this in discovery mode
+                self.view.addSubview(sceneView)
+                //TODO: scene blow does not contain a cube
+                sceneView.scene = DiscoveryLensViewController.discoveryLensModel.scene
             }
-            //we create the scene view, which will serve as a container for the actual scene
-            sceneView = SCNView()
-            sceneView.frame = self.view.bounds
-            sceneView.backgroundColor = UIColor.clear
-            sceneView.autoenablesDefaultLighting = true
-            sceneView.allowsCameraControl = true //in the future, we may want to disable this in discovery mode
-            self.view.addSubview(sceneView)
-            sceneView.scene = shape.scene
+            
         //loads blank stub shape
         } else if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
             print("DEBUG INFO- Stub cube loaded into camera view")
-            //we create the scene view, which will serve as a container for the actual scene
             sceneView = SCNView()
             sceneView.frame = self.view.bounds
             sceneView.backgroundColor = UIColor.clear

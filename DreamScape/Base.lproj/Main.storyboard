@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Ye9-ZD-a6F" customClass="SCNView">
-                                <rect key="frame" x="0.0" y="181" width="375" height="258"/>
+                                <rect key="frame" x="16" y="181" width="343" height="258"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a side" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SFz-gl-G8P">
@@ -37,38 +37,108 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe up to drop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ua4-Ur-qM4">
-                                <rect key="frame" x="85" y="521" width="205" height="39"/>
+                                <rect key="frame" x="85" y="571" width="205" height="39"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="Vx0-Ly-Zly"/>
+                                    <constraint firstAttribute="height" constant="39" id="Pfk-yE-Fhs"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tnr-1b-Lhj">
+                                <rect key="frame" x="155" y="499" width="64" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="HtY-01-6ka"/>
+                                    <constraint firstAttribute="height" constant="64" id="QSv-DV-owk"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rn8-QQ-YJe">
+                                <rect key="frame" x="329" y="72" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="5yj-OS-e2j"/>
+                                    <constraint firstAttribute="height" constant="30" id="SZv-Tx-dqL"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="drop_settings"/>
+                                <connections>
+                                    <segue destination="rm0-4l-LBZ" kind="show" identifier="editDropSettings" id="w64-9D-O5A"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ua4-Ur-qM4" secondAttribute="bottom" constant="58" id="1oE-Cn-2Xe"/>
-                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="centerX" secondItem="Ua4-Ur-qM4" secondAttribute="centerX" id="1yb-n7-9S6"/>
-                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2rM-Vy-u2T"/>
-                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="top" secondItem="Ye9-ZD-a6F" secondAttribute="bottom" constant="82" id="Fh7-S8-gb5"/>
+                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="top" secondItem="Tnr-1b-Lhj" secondAttribute="bottom" constant="8" symbolic="YES" id="Ars-jB-2UR"/>
+                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="top" secondItem="rn8-QQ-YJe" secondAttribute="bottom" constant="79" id="Dv3-k1-Efz"/>
+                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="top" secondItem="SFz-gl-G8P" secondAttribute="bottom" constant="23" id="L4j-HG-bCl"/>
                             <constraint firstItem="SFz-gl-G8P" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="55" id="NMo-Pa-sxj"/>
-                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="top" secondItem="SFz-gl-G8P" secondAttribute="bottom" constant="23" id="O5k-Dv-yeE"/>
-                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="OlP-m3-gaB"/>
+                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="centerX" secondItem="Ye9-ZD-a6F" secondAttribute="centerX" id="QSW-77-muA"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ua4-Ur-qM4" secondAttribute="bottom" constant="8" symbolic="YES" id="SqF-OB-WeG"/>
+                            <constraint firstItem="rn8-QQ-YJe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="WYD-zP-pdh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="SFz-gl-G8P" secondAttribute="trailing" constant="156" id="ckz-Nb-4pp"/>
+                            <constraint firstItem="Tnr-1b-Lhj" firstAttribute="centerX" secondItem="Ua4-Ur-qM4" secondAttribute="centerX" id="dTw-wH-hxO"/>
+                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mwt-C7-iIp"/>
+                            <constraint firstItem="rn8-QQ-YJe" firstAttribute="trailing" secondItem="Ye9-ZD-a6F" secondAttribute="trailing" id="pUn-d7-DrO"/>
                             <constraint firstItem="SFz-gl-G8P" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sxu-NJ-a3a"/>
+                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="leading" secondItem="SFz-gl-G8P" secondAttribute="leading" id="uXH-ld-lt4"/>
+                            <constraint firstItem="Tnr-1b-Lhj" firstAttribute="top" secondItem="Ye9-ZD-a6F" secondAttribute="bottom" constant="60" id="zGm-ck-82n"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Make &amp; Drop" id="owE-TT-dNc"/>
                     <connections>
                         <outlet property="shapeCreatorSuperView" destination="8bC-Xf-vdC" id="LbS-ra-8dn"/>
                         <outlet property="sideSelector" destination="Ye9-ZD-a6F" id="Qvb-Jw-cwC"/>
+                        <outlet property="upArrowSprite" destination="Tnr-1b-Lhj" id="2ME-zh-NCY"/>
                         <segue destination="hQd-MA-hZp" kind="show" identifier="annotateShape" id="JFN-G9-Y5C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1054" y="27"/>
+            <point key="canvasLocation" x="1053.5999999999999" y="26.53673163418291"/>
+        </scene>
+        <!--Drop Settings View Controller-->
+        <scene sceneID="0IR-Bj-YVK">
+            <objects>
+                <viewController id="rm0-4l-LBZ" customClass="DropSettingsViewController" customModule="MakeDrop" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cPg-FB-Ftq"/>
+                        <viewControllerLayoutGuide type="bottom" id="7vb-7w-h3N"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="36h-LE-SI8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drop Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9P-7M-KL1">
+                                <rect key="frame" x="16" y="72" width="300" height="53"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBo-6u-92c">
+                                <rect key="frame" x="230" y="571" width="129" height="39"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="129" id="Ynr-p7-0xx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <state key="normal" title="Save"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="I9P-7M-KL1" secondAttribute="trailing" constant="43" id="142-Qu-ijr"/>
+                            <constraint firstItem="I9P-7M-KL1" firstAttribute="top" secondItem="cPg-FB-Ftq" secondAttribute="bottom" constant="8" symbolic="YES" id="22n-2P-lnM"/>
+                            <constraint firstItem="7vb-7w-h3N" firstAttribute="top" secondItem="pBo-6u-92c" secondAttribute="bottom" constant="8" symbolic="YES" id="Guu-5G-Hgn"/>
+                            <constraint firstItem="7vb-7w-h3N" firstAttribute="top" secondItem="I9P-7M-KL1" secondAttribute="bottom" constant="493" id="Qe5-gw-MhS"/>
+                            <constraint firstItem="I9P-7M-KL1" firstAttribute="leading" secondItem="36h-LE-SI8" secondAttribute="leadingMargin" id="W9C-CT-JyR"/>
+                            <constraint firstItem="pBo-6u-92c" firstAttribute="trailing" secondItem="36h-LE-SI8" secondAttribute="trailingMargin" id="eN5-M9-pTO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="saveSettings" destination="pBo-6u-92c" id="dOd-4d-zYu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WJP-vz-fNX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1958" y="-635"/>
         </scene>
         <!--Canvas Editor View Controller-->
         <scene sceneID="qFY-nO-ht0">
@@ -95,12 +165,6 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cube Surface " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVq-UV-uMf">
-                                <rect key="frame" x="38" y="114" width="300" height="53"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdd-0X-cVc">
                                 <rect key="frame" x="38" y="559" width="129" height="39"/>
                                 <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -185,20 +249,26 @@
                                     <action selector="submitAnnotation:" destination="hQd-MA-hZp" eventType="touchUpInside" id="QA7-5r-ddE"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cube Surface " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVq-UV-uMf">
+                                <rect key="frame" x="16" y="72" width="300" height="53"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="w40-76-oTw" firstAttribute="leading" secondItem="pdd-0X-cVc" secondAttribute="trailing" constant="42" id="5Ii-SJ-B0k"/>
-                            <constraint firstItem="JVq-UV-uMf" firstAttribute="trailing" secondItem="0tU-SK-wrU" secondAttribute="trailing" id="7pK-DF-aA6"/>
+                            <constraint firstItem="JVq-UV-uMf" firstAttribute="leading" secondItem="cmy-W8-xr6" secondAttribute="leadingMargin" id="AKa-HZ-1zz"/>
                             <constraint firstItem="w40-76-oTw" firstAttribute="trailing" secondItem="yhv-JV-3m0" secondAttribute="trailing" id="CXD-zk-DLo"/>
-                            <constraint firstItem="JVq-UV-uMf" firstAttribute="top" secondItem="vPl-8c-J03" secondAttribute="bottom" constant="50" id="DnX-XF-gsP"/>
-                            <constraint firstItem="0tU-SK-wrU" firstAttribute="top" secondItem="JVq-UV-uMf" secondAttribute="bottom" constant="17" id="Pae-gN-eqb"/>
                             <constraint firstItem="pdd-0X-cVc" firstAttribute="leading" secondItem="yhv-JV-3m0" secondAttribute="leading" id="UpV-BY-GBC"/>
-                            <constraint firstItem="JVq-UV-uMf" firstAttribute="leading" secondItem="0tU-SK-wrU" secondAttribute="leading" id="WvE-jx-Ct6"/>
                             <constraint firstItem="pdd-0X-cVc" firstAttribute="leading" secondItem="0tU-SK-wrU" secondAttribute="leading" id="XUE-KM-s8P"/>
                             <constraint firstItem="yhv-JV-3m0" firstAttribute="top" secondItem="0tU-SK-wrU" secondAttribute="bottom" constant="17" id="a8G-dn-8sU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JVq-UV-uMf" secondAttribute="trailing" constant="43" id="a8w-nc-Qo0"/>
                             <constraint firstItem="0tU-SK-wrU" firstAttribute="centerY" secondItem="cmy-W8-xr6" secondAttribute="centerY" id="e5j-kH-eNl"/>
+                            <constraint firstItem="JVq-UV-uMf" firstAttribute="top" secondItem="vPl-8c-J03" secondAttribute="bottom" constant="8" symbolic="YES" id="fUG-P9-sHi"/>
                             <constraint firstItem="0tU-SK-wrU" firstAttribute="centerX" secondItem="cmy-W8-xr6" secondAttribute="centerX" id="k6b-xx-HXu"/>
+                            <constraint firstItem="0tU-SK-wrU" firstAttribute="top" secondItem="JVq-UV-uMf" secondAttribute="bottom" constant="59" id="tjN-By-eXn"/>
                             <constraint firstItem="w40-76-oTw" firstAttribute="baseline" secondItem="pdd-0X-cVc" secondAttribute="baseline" id="vLL-NS-xbD"/>
                             <constraint firstItem="pdd-0X-cVc" firstAttribute="top" secondItem="yhv-JV-3m0" secondAttribute="bottom" constant="8" symbolic="YES" id="xIB-H8-T4L"/>
                         </constraints>
@@ -331,6 +401,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="drop_settings" width="64" height="64"/>
         <image name="picker_black" width="128" height="128"/>
         <image name="picker_blue" width="64" height="64"/>
         <image name="picker_eraser" width="200" height="192"/>
