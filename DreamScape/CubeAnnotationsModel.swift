@@ -28,41 +28,7 @@ class CubeAnnotationsModel {
             self.init(withShape: Constants.filledStructure(shape: Constants.Shape.Cube, ofScale: 1.0))
         }
     }
-    
-    //prearing shape with supplied materials
-//    convenience init(suppliedMaterials materials: [SCNMaterial]) {
-//        self.init(withShape: Constants.filledStructure(shape: Constants.Shape.Cube, ofScale: 1.0, withMaterials: materials))
-//    }
-    
-    //wrapper for the faces of any object
-//    struct GenericFace {
-//        var shape: Constants.Shape
-//        var recycled: Bool
-//        var material: SCNMaterial
-//    }
-    
-    //dictionary of materials pertaining to a brand new cube, which can be edited by looking up the appropriate facial geometry index
-//    var cubeTextures: Dictionary<Constants.CubeFace, GenericFace> = [
-//        .Front: GenericFace(shape: Constants.Shape.Cube,
-//                            recycled: false,
-//                            material: SCNMaterial()),
-//        .Right: GenericFace(shape: Constants.Shape.Cube,
-//                            recycled: false,
-//                            material: SCNMaterial()),
-//        .Back: GenericFace(shape: Constants.Shape.Cube,
-//                           recycled: false,
-//                           material: SCNMaterial()),
-//        .Left: GenericFace(shape: Constants.Shape.Cube,
-//                           recycled: false,
-//                           material: SCNMaterial()),
-//        .Top: GenericFace(shape: Constants.Shape.Cube,
-//                          recycled: false,
-//                          material: SCNMaterial()),
-//        .Bottom: GenericFace(shape: Constants.Shape.Cube,
-//                             recycled: false,
-//                             material: SCNMaterial())
-//        ]
-    
+        
     //response from canvas editor
     private var responseLoader: canvasResponse?
     

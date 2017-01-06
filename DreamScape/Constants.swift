@@ -21,6 +21,7 @@ public class Constants {
     
     // MARK: - Make & Drop v1 API endpoints
     public static let DROP_SHAPE_ENDPOINT = "http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/drop_shape"
+    public static let LOCAL_DROP_SHAPE_ENDPOINT = "http://localhost:3000/api/v1/drop_shape"
 
     // MARK: - Generic shape wrappers and helpers
     public enum Shape : String {

@@ -31,17 +31,6 @@ class CanvasEditorViewController: UIViewController {
         }
     }
     
-    //precondition: the model has been loaded with all six materials owned by the cube
-//    var currentFace : Constants.CubeFace {
-//        get {
-//            if faceId != nil {
-//                return Constants.CubeFace(rawValue: faceId!)!
-//            } else {
-//                return Constants.CubeFace(rawValue: 0)!
-//            }
-//        }
-//    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //tab bar item appearance under this specific controller
@@ -81,19 +70,6 @@ class CanvasEditorViewController: UIViewController {
             if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
                 print("DEBUG INFO- Material changed in Discovery Lens Model")
                 let lensModel: DiscoveryLensModel = DiscoveryLensModel()
-//                var materials: [SCNMaterial] = Array()
-                //appending manually to ensure consistency
-//                materials.append(cubeModel!.cubeTextures[.Front]!.material)
-//                materials.append(cubeModel!.cubeTextures[.Right]!.material)
-//                materials.append(cubeModel!.cubeTextures[.Back]!.material)
-//                materials.append(cubeModel!.cubeTextures[.Left]!.material)
-//                materials.append(cubeModel!.cubeTextures[.Top]!.material)
-//                materials.append(cubeModel!.cubeTextures[.Bottom]!.material)
-                
-//                let newShape = Constants.filledStructure(
-//                    shape: Constants.Shape.Cube,
-//                    ofSize: CGFloat(1.0),
-//                    withMaterials: materials)
                 
                 if(Constants.DEBUG_MODE && Constants.SPOOF_SERVER) {
                     lensModel.discoveredShapes.removeAll()

@@ -28,33 +28,6 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
     static var shapeInCanvas: SCNNode?
     static var sceneKitCamera: SCNNode?
     
-
-//TODO: swipe gestures do not work within the SCNView... We may need to disable user interactivity in scenekit and implement
-    //custom pan gestures if this seems like a huge inconvenience for the users
-//    func panScene(gestureRecognize: UIPanGestureRecognizer) {
-//        //translation within shape
-//        let translation = gestureRecognize.translation(in: gestureRecognize.view!)
-//        
-//        let x = Float(translation.x)
-//        let y = Float(-translation.y)
-//        
-//        let anglePan = sqrt(pow(x,2)+pow(y,2))*(Float)(M_PI)/180.0
-//        
-//        var rotationVector = SCNVector4()
-//        rotationVector.x = -y
-//        rotationVector.y = x
-//        rotationVector.z = 0
-//        rotationVector.w = anglePan
-//        
-//        geometryNode.rotation = rotationVector
-//        
-//        
-//        if(gestureRecognize.state == UIGestureRecognizerState.Ended) {
-//            //
-//        }
-//    }
-//    
-    
     @IBOutlet var shapeCreatorSuperView: UIView! {
         didSet {
             //linking swipe right gesture with tab left
@@ -121,24 +94,47 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
     
     func prepareJSONDropPost(latitude lat: String, longitude long: String,
                              withShape shape: Constants.filledStructure, hasSettings settings: Bool) -> Data? {
-        var jsonBody = Dictionary<String, String>()
+        var jsonBody = Dictionary<String, Any>()
         jsonBody["latitude"] = lat
         jsonBody["longitude"] = long
-        jsonBody["type"] = shape.shape.rawValue
+        jsonBody["name"] = shape.shape.rawValue
         jsonBody["face_count"] = String(shape.faceCount)
         jsonBody["created_at"] = "TODO"
         jsonBody["public"] = "true"
         jsonBody["owner"] = "TODO"
-        let jsonDict: [String: Any] = ["title": "drop_structure", "dict": jsonBody]
-        var jsonData: Data?
+        jsonBody["materials"] = prepareJSONImageMaterials(with: shape.materialImages)
         
+        var jsonData: Data?
         do {
-            jsonData = try JSONSerialization.data(withJSONObject: jsonDict, options: .prettyPrinted)
+            jsonData = try JSONSerialization.data(withJSONObject: jsonBody, options: .prettyPrinted)
         } catch {
             print("ERROR - Formatting JSON for drop request")
         }
        
         return jsonData
+    }
+    
+    //encoding the materials to base64 to be sent to the MakeDrop APIs
+    func prepareJSONImageMaterials(with images: [UIImage]) -> Dictionary<String, Any> {
+        var imagesJSON = Dictionary<String, Any>()
+        
+        for i in 0..<images.count {
+            var  imageJSON = Dictionary<String, String>()
+            let base64Image = UIImageJPEGRepresentation(images[i], 0.9)?.base64EncodedString()
+            imageJSON["content_type"] = "image/jpeg"
+            imageJSON["filename"] = "image\(i)"
+            imageJSON["file_data"] = base64Image ?? ""
+            imageJSON["geometry_index"] = String(i)
+            imagesJSON["image\(i)"] = imageJSON
+        }
+        return imagesJSON
+    }
+    
+    
+    //helper function useful for debugging JSON payloads
+    func printJSONDataReadable(json: Data?) {
+        let dictFromJSON = String.init(data: json!, encoding: .ascii)
+        print(dictFromJSON ?? "ERROR- inspecting json data")
     }
     
     func makeDropAPIRequestOnCurrentCube() {
@@ -155,6 +151,9 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
             let request = NSMutableURLRequest(url: url)
             request.httpMethod = "POST"
             request.httpBody = jsonData
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            
             DispatchQueue.global(qos: .userInitiated).async {
                 let task = URLSession.shared.dataTask(with: request as URLRequest) { data,response,error in
                     if error != nil{
@@ -218,18 +217,6 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
         sideSelector.autoenablesDefaultLighting = true
         sideSelector.backgroundColor = UIColor.black
         sideSelector.allowsCameraControl = true
-//        if let currentShapeInCanvas = ShapeCreatorViewController.shapeInCanvas?.geometry {
-//            currentShapeInCanvas.materials.removeAll()
-//            if let box = currentShapeInCanvas as? SCNBox {
-//                //we must ensure materials have an order consistent with their geometric index for hit tests
-//                box.materials.append(shapeModel.cubeTextures[.Front]!.material)
-//                box.materials.append(shapeModel.cubeTextures[.Right]!.material)
-//                box.materials.append(shapeModel.cubeTextures[.Back]!.material)
-//                box.materials.append(shapeModel.cubeTextures[.Left]!.material)
-//                box.materials.append(shapeModel.cubeTextures[.Top]!.material)
-//                box.materials.append(shapeModel.cubeTextures[.Bottom]!.material)
-//            }
-//        }
     }
     
     //the user taps on a face (side) of the shape to edit it
@@ -238,10 +225,6 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
         let hitResults = sideSelector.hitTest(callingView)
         if let tappedFace = hitResults.first{
             performSegue(withIdentifier: "annotateShape", sender: tappedFace)
-//            let face = Constants.CubeFace(rawValue: tappedFace.geometryIndex)
-//            if face != nil {
-//                performSegue(withIdentifier: "annotateShape", sender: tappedFace)
-//            }
         }
     }
     
@@ -269,8 +252,6 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
         upArrowSprite.animationDuration = 1.0
         upArrowSprite.startAnimating()
     }
-    
-    
     
 }
 

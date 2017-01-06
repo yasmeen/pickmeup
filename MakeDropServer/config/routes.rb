@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'landing#home'
   resources :shapes
   resources :materials
-
+  
 
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
