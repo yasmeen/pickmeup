@@ -46,8 +46,6 @@ module Api
       return shape
     end
 
-
-
     def form_materials_from_request(image_level_json_data, shape_id) 
       materials = Hash.new
       image_level_json_data.each do |image_key, image_value|
@@ -63,28 +61,27 @@ module Api
       return materials
     end
 
+    def parse_image_data(image_data, file_name)
+      @tempfile = Tempfile.new('item_image')
+      @tempfile.binmode
+      @tempfile.write Base64.decode64(image_data[:file_data])
+      @tempfile.rewind
 
-	  def parse_image_data(image_data, file_name)
-	    @tempfile = Tempfile.new('item_image')
-	    @tempfile.binmode
-	    @tempfile.write Base64.decode64(image_data[:file_data])
-	    @tempfile.rewind
+      uploaded_file = ActionDispatch::Http::UploadedFile.new(
+        tempfile: @tempfile,
+        filename: file_name
+      )
 
-	    uploaded_file = ActionDispatch::Http::UploadedFile.new(
-	      tempfile: @tempfile,
-	      filename: file_name
-	    )
+     uploaded_file.content_type = image_data[:content_type]
+     uploaded_file
+    end
 
-	   uploaded_file.content_type = image_data[:content_type]
-	   uploaded_file
-	  end
-
-	  def clean_tempfile
-	    if @tempfile
-	      @tempfile.close
-	      @tempfile.unlink
-	    end
-	  end
+    def clean_tempfile
+      if @tempfile
+        @tempfile.close
+        @tempfile.unlink
+      end
+    end
 
     end
   end
