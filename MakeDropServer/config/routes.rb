@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
       post 'drop_shape' => 'drop#drop_shape'
-      post 'discover_shape' => 'discover#discover_shape'
+      post 'discover_shapes' => 'discover#discover_shapes'
     end
   end
 

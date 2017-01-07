@@ -3,18 +3,19 @@ module Api
     class DiscoverController < ApplicationController
       skip_before_action :verify_authenticity_token
 
-      SEARCH_RADIUS = .0005
-      
-      def discover_shape
+      SEARCH_RADIUS = 0.0001
+
+      def discover_shapes
       	begin
-      	params = params.require(:lat, :long)
-      	if params.key?(:lat) and params.key?(:long)
+      	location = params.permit(:lat, :long)
+      
+      	if location.key?(:lat) and params.key?(:long)
 	      	#for the protoype, we had a hardcoded search radius 
-	      	latitude = params[:lat].to_f
-	      	longitude = params[:long].to_f
+	      	latitude = location[:lat].to_f
+	      	longitude = location[:long].to_f
 	      	shapes_in_radius = Shape.where(latitude: (latitude-SEARCH_RADIUS)...(latitude+SEARCH_RADIUS))
 	      	shapes_in_radius = shapes_in_radius.where(longitude: (longitude-SEARCH_RADIUS)...(longitude+SEARCH_RADIUS))
-	      	return json: {status: "success", data: shapes_in_radius.to_json}
+	      	return render json: {status: "success", data: shapes_in_radius.to_json}
 
 	    else
 	    	return render json: {status: "failed", reason: "Longitude and Latitude must be provided"}
@@ -26,7 +27,10 @@ module Api
         end
 
         return render json: { status: "failed", reason: "An unknown exception has occurred" }
+
       end
+
+
     end
   end
 end

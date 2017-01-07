@@ -13,6 +13,18 @@
 
 ActiveRecord::Schema.define(version: 20170102084329) do
 
+
+  create_table "shapes", force: :cascade do |t|
+    t.string   "owner"
+    t.string   "name"
+    t.integer  "face_count"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at", null: false
+    t.boolean  "public"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "materials", force: :cascade do |t|
     t.integer  "shape_id"
     t.string   "image"
@@ -23,17 +35,6 @@ ActiveRecord::Schema.define(version: 20170102084329) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-  end
-
-  create_table "shapes", force: :cascade do |t|
-    t.string   "owner"
-    t.string   "type"
-    t.integer  "face_count"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at", null: false
-    t.boolean  "public"
-    t.datetime "updated_at", null: false
   end
 
 end
