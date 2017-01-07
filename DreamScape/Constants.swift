@@ -15,12 +15,14 @@ public class Constants {
     public static let MAX_SCALE: CGFloat = 100.0
     public static let MIN_SCALE: CGFloat = 0.0
     public static let DEBUG_MODE: Bool = true
-    public static let SPOOF_SERVER: Bool = true //for now, this implies we are only working with cubes
+    public static let SPOOF_SERVER: Bool = false //for now, this implies we are only working with cubes
     public static let DEFAULT_BLUE: [Float] = [0.0, 122.0/255.0, 1.0, 1.0]
     public static let CUBE_FACE_DIMENSION: Int = 300 //fresh cubes are initialized with 300x300 white materials
+    public static let PING_DISCOVERY_API_INTERVAL = 2.0
     
     // MARK: - Make & Drop v1 API endpoints
     public static let DROP_SHAPE_ENDPOINT = "http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/drop_shape"
+    public static let DISCOVER_SHAPES_ENDPOINT = "http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/discover_shapes"
     public static let LOCAL_DROP_SHAPE_ENDPOINT = "http://localhost:3000/api/v1/drop_shape"
 
     // MARK: - Generic shape wrappers and helpers
@@ -156,7 +158,17 @@ public class Constants {
         
     }
     
+    
+    //MARK: - Helper function useful for debugging JSON payloads
+    public static func printJSONDataReadable(json: Data?, to url: String) {
+        let dictFromJSON = String.init(data: json!, encoding: .ascii)
+        print("payload:\n-------\n \(dictFromJSON) \n-------\n sent to: \(url)")
+    }
+    
 }
+
+
+
 
 //MARK: - Additional functionality with scenekit's vectors made global, add any applied linear algebra concepts here
 public extension SCNVector3 {

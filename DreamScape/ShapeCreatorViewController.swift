@@ -130,13 +130,6 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
         return imagesJSON
     }
     
-    
-    //helper function useful for debugging JSON payloads
-    func printJSONDataReadable(json: Data?) {
-        let dictFromJSON = String.init(data: json!, encoding: .ascii)
-        print(dictFromJSON ?? "ERROR- inspecting json data")
-    }
-    
     func makeDropAPIRequestOnCurrentCube() {
         //dropping at current location
         //TODO: option to drop remotely (passing in lat and long here for remote location)
@@ -146,7 +139,9 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
             withShape: shapeModel.currentShape,
             hasSettings: false)
         
-        printJSONDataReadable(json: jsonData)
+        if(Constants.DEBUG_MODE) {
+            Constants.printJSONDataReadable(json: jsonData, to: Constants.DROP_SHAPE_ENDPOINT)
+        } 
         
         if jsonData != nil {
             let url: URL = NSURL(string: Constants.DROP_SHAPE_ENDPOINT)! as URL

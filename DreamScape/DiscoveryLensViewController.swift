@@ -32,6 +32,12 @@ class DiscoveryLensViewController: UIViewController {
     var motionLastYaw: Float?
     var motionQueue: OperationQueue = OperationQueue()
     
+    //timer state for async pinging of the MakeDrop Discovery API
+    private let kTimeoutInSeconds:TimeInterval = Constants.PING_DISCOVERY_API_INTERVAL
+    private var timer: Timer?
+    private var lastRequestReturned = true
+
+    
     //sample to play with more basic AR with 2D images
     //@IBOutlet weak var imageView: UIImageView!
     
@@ -117,6 +123,8 @@ class DiscoveryLensViewController: UIViewController {
         super.viewDidAppear(animated)
         if Constants.SPOOF_SERVER {
             shapeDiscovered()
+        } else {
+            startFetching()
         }
         
         //tab bar item appearance under this specific controller
@@ -133,6 +141,9 @@ class DiscoveryLensViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
         sceneView.removeFromSuperview()
+        if !Constants.SPOOF_SERVER {
+            stopFetching()
+        }
     }
     
     
@@ -222,6 +233,77 @@ class DiscoveryLensViewController: UIViewController {
     func updateModelShape() {
         //pass
         
+    }
+    
+    
+    func formProximityRequest() -> NSMutableURLRequest {
+        let jsonBody: Dictionary<String, String> = ["lat": GlobalResources.Location.lat ,
+                                                    "long": GlobalResources.Location.long]
+        var jsonData: Data?
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: jsonBody, options: .prettyPrinted)
+        } catch {
+            print("ERROR - Formatting JSON for drop request")
+        }
+        
+        if(Constants.DEBUG_MODE) {
+            Constants.printJSONDataReadable(json: jsonData, to: Constants.DISCOVER_SHAPES_ENDPOINT)
+        }
+        
+        let url: URL = NSURL(string: Constants.DISCOVER_SHAPES_ENDPOINT)! as URL
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+        return request
+    }
+    
+    
+    //Requesting the MakeDrop Discovery API to send nearby shapes
+    func requestProximity() {
+        if lastRequestReturned {
+            DispatchQueue.global(qos: .utility).async { [weak self] in
+                //We are accessing a shared context below, but it is OK if multiple threads enter the critical region below
+                //we simply need some sort of throttle in case the network requests take more time than intended
+                self?.lastRequestReturned = false
+                if let request = self?.formProximityRequest() {
+                    let task = URLSession.shared.dataTask(with: request as URLRequest) { data,response,error in
+                        if error != nil{
+                            print("ERROR- \(error?.localizedDescription)")
+                            return
+                        }
+                        do {
+                            let response = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
+                            DispatchQueue.main.async {
+                                
+                                print("RESPONSE: \(response)")
+                                
+                            }
+                            
+                        } catch {
+                            print("ERROR - Failed to ping the discovery APIs for nearby objects")
+                        }
+                    }
+                    task.resume()
+                }
+                self?.lastRequestReturned = true
+            }
+        }
+    }
+    
+    //initiate discovery mode, which pings the MakeDrop API for nearby shapes
+    func startFetching() {
+        self.timer = Timer.scheduledTimer(timeInterval: self.kTimeoutInSeconds,
+                                          target: self,
+                                          selector: #selector(DiscoveryLensViewController.requestProximity),
+                                          userInfo: nil,
+                                          repeats: true)
+    }
+    
+    func stopFetching() {
+        self.timer!.invalidate()
     }
     
     //only used for server spoof mode to load shapes in from the Canvas Editor's model
