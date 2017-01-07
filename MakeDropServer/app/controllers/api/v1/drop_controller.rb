@@ -1,10 +1,9 @@
 module Api
   module V1
-    class ShapesController < ApplicationController
+    class DropController < ApplicationController
       skip_before_action :verify_authenticity_token
 
-      def drop
-
+      def drop_shape
       	result = { status: "failed" }
 
       	begin
@@ -38,7 +37,7 @@ module Api
     def form_shape_from_request(top_level_json_data)
       shape = Hash.new
       shape["owner"] = top_level_json_data[:owner]
-      shape["type"] = top_level_json_data[:type]
+      shape["name"] = top_level_json_data[:type]
       shape["face_count"] = top_level_json_data[:face_count]
       shape["latitude"] = top_level_json_data[:latitude]
       shape["longitude"] = top_level_json_data[:longitude]

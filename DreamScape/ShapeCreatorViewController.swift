@@ -146,6 +146,8 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
             withShape: shapeModel.currentShape,
             hasSettings: false)
         
+        printJSONDataReadable(json: jsonData)
+        
         if jsonData != nil {
             let url: URL = NSURL(string: Constants.DROP_SHAPE_ENDPOINT)! as URL
             let request = NSMutableURLRequest(url: url)
