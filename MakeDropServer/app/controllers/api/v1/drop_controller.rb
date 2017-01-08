@@ -40,6 +40,7 @@ module Api
       shape["name"] = top_level_json_data[:type]
       shape["face_count"] = top_level_json_data[:face_count]
       shape["latitude"] = top_level_json_data[:latitude]
+      shape["scale"] = top_level_json_data[:scale]
       shape["longitude"] = top_level_json_data[:longitude]
       shape["public"] = top_level_json_data[:public]
       return shape

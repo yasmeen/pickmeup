@@ -43,10 +43,10 @@ module Api
       		shape.materials.each do |material|
       			shape_json[shape.id]["materials"][material.geometry_index] = read_image(material)
       		end
+      		#shape_json[shape.id]["materials"] = shape_json[shape.id]["materials"].to_json
       	end
 
-
-      	return shape_json.to_json
+      	return shape_json
       end
 
       def read_image(material)

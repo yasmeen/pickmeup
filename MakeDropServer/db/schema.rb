@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20170102084329) do
     t.integer  "face_count"
     t.float    "latitude"
     t.float    "longitude"
-    t.float     "scale"
+    t.float    "scale"
     t.datetime "created_at", null: false
     t.boolean  "public"
     t.datetime "updated_at", null: false
