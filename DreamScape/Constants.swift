@@ -18,7 +18,10 @@ public class Constants {
     public static let SPOOF_SERVER: Bool = false //for now, this implies we are only working with cubes
     public static let DEFAULT_BLUE: [Float] = [0.0, 122.0/255.0, 1.0, 1.0]
     public static let CUBE_FACE_DIMENSION: Int = 300 //fresh cubes are initialized with 300x300 white materials
-    public static let PING_DISCOVERY_API_INTERVAL = 2.0
+    public static let PING_DISCOVERY_API_INTERVAL = 5.0
+    public static let DEFAULT_SHAPE_SCALE: CGFloat = 1.0
+    public static let DEFAULT_SHAPE_NAME: String = "Cube"
+    public static let DEFAULT_SHAPE_TYPE: Constants.Shape = Constants.Shape.Cube
     
     // MARK: - Make & Drop v1 API endpoints
     public static let DROP_SHAPE_ENDPOINT = "http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/drop_shape"
@@ -77,10 +80,22 @@ public class Constants {
     //from the canvas from a fresh structure, which is then sent to the server
     //simplified server model contains shapes with planar faces
     //simplified server response includes: shape type, number of faces, image per face
-    struct filledStructure {
+    struct filledStructure: Equatable, Hashable {
         var shape: Constants.Shape
         var faceCount: Int
         var scale: CGFloat
+        var id: Int?
+        
+        //we want shapes with the same id to collide when storing the structures in a set
+        //we also want a collision to occur among shapes that have not yet been saved (sent to the MakeDrop Drop API)
+        var hashValue: Int {
+            if id != nil {
+                return id!
+            } else {
+                return -1
+            }
+        }
+        
         //Images should not exist without a corresponding geometry index
         //For now the solution will be to ensure that when the saveShape API endpoint is called,
         //materials are uploaded in strictly increasing order, however this has its obvious limitations in an
@@ -120,6 +135,40 @@ public class Constants {
             }
         }
         
+        //initialization from the server with corresponding id
+        init(shape: Constants.Shape, ofScale scale: CGFloat, ofID id: Int?, withImages images: [UIImage]) {
+            self.shape = shape
+            self.faceCount = Constants.shapeMaterialCount[shape]!
+            self.id = id
+            
+            if scale > Constants.MIN_SCALE && scale < Constants.MAX_SCALE {
+                self.scale = scale //this scale is a multiplier on the default sizes defined in Constants.swift
+            } else {
+                self.scale = 1.0
+            }
+            
+            self.materials = Array()
+            self.materialImages = Array()
+            for i in 1...Constants.shapeMaterialCount[shape]! {
+                if i<=images.count {
+                    self.materialImages.append(images[i-1])
+                    let material = SCNMaterial()
+                    material.diffuse.contents = images[i-1]
+                    self.materials.append(material)
+                } else {
+                    let material = SCNMaterial()
+                    let materialImage = UIImage(color: UIColor.white,
+                                                size: CGSize(width: Constants.CUBE_FACE_DIMENSION,
+                                                             height: Constants.CUBE_FACE_DIMENSION))
+                    self.materialImages.append(materialImage!)
+                    material.diffuse.contents = materialImage
+                    self.materials.append(material)
+                }
+            }
+        }
+        
+        
+        
         //initialization from the canvas editor (with raw materials instead of images)
         init(shape: Constants.Shape, ofScale scale: CGFloat, withMaterials materials: [SCNMaterial]) {
             self.shape = shape
@@ -156,13 +205,21 @@ public class Constants {
             self.init(shape: shape, ofScale: scale, withMaterials: [])
         }
         
+        //implementing the equatable protocol so that we can keep a set of shapes in the discovery view without duplicates
+        static func ==(lhs: Constants.filledStructure, rhs: Constants.filledStructure) -> Bool {
+            if lhs.id != nil && rhs.id != nil {
+                return lhs.id! == rhs.id!
+            }
+            return false
+        }
+        
     }
     
     
     //MARK: - Helper function useful for debugging JSON payloads
     public static func printJSONDataReadable(json: Data?, to url: String) {
         let dictFromJSON = String.init(data: json!, encoding: .ascii)
-        print("payload:\n-------\n \(dictFromJSON) \n-------\n sent to: \(url)")
+        print("payload:\n-------\n \(dictFromJSON ?? "EMPTY REQUEST") \n-------\n sent to: \(url)")
     }
     
 }

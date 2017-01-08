@@ -68,14 +68,14 @@ class CanvasEditorViewController: UIViewController {
             //.setFace(currentFace, with: canvas.image!)
             
             if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
-                print("DEBUG INFO- Material changed in Discovery Lens Model")
-                let lensModel: DiscoveryLensModel = DiscoveryLensModel()
-                
-                if(Constants.DEBUG_MODE && Constants.SPOOF_SERVER) {
-                    lensModel.discoveredShapes.removeAll()
-                    lensModel.discoveredShapes.append(cubeModel!.currentShape)
-                    DiscoveryLensViewController.updateModel(discoveryLensModel: lensModel)
-                }
+//                print("DEBUG INFO- Material changed in Discovery Lens Model")
+//                let lensModel: DiscoveryLensModel = DiscoveryLensModel()
+//                
+//                if(Constants.DEBUG_MODE && Constants.SPOOF_SERVER) {
+//                    lensModel.discoveredShapes.removeAll()
+//                    lensModel.discoveredShapes.insert(cubeModel!.currentShape)
+//                    DiscoveryLensViewController.updateModel(discoveryLensModel: lensModel)
+//                }
             } else {
                 print("Error - Canvas loaded without a geometry index or base material")
             }

@@ -18,13 +18,15 @@ class DiscoveryLensViewController: UIViewController {
     
     //initially contains no discovered shapes, however shapes will eventually populate according to user proximity
     //struct for now because of server spoofing, once the API calls can be made, this below should be an instance variable
-    static var discoveryLensModel: DiscoveryLensModel = DiscoveryLensModel()
+   //static var discoveryLensModel: DiscoveryLensModel = DiscoveryLensModel()
     
-    //session feed state
+    
+    //session feed state and AR overlay scene
     var captureSession = AVCaptureSession()
     var sessionOutput = AVCapturePhotoOutput()
     var previewLayer = AVCaptureVideoPreviewLayer()
-    var sceneView = SCNView()
+    var cameraViewCreated = false
+    var currentNodesInFOV = Set<Int>()
     
     //core motion state
     var motionManager: CMMotionManager = CMMotionManager()
@@ -36,16 +38,11 @@ class DiscoveryLensViewController: UIViewController {
     private let kTimeoutInSeconds:TimeInterval = Constants.PING_DISCOVERY_API_INTERVAL
     private var timer: Timer?
     private var lastRequestReturned = true
+    
+    //Discovery lens model, which holds all scene kit node states as well as all shapes in current field of view
 
-    
-    //sample to play with more basic AR with 2D images
-    //@IBOutlet weak var imageView: UIImageView!
-    
-    //nodes in scenekit hierarchy that represent discovered shapes and the single
     //camera node that should align with the video feed and approximate user movement adjustments
-    static var discoveredShapes: [SCNNode]?
-    static var sceneKitCamera: SCNNode?
-    
+    var discoveryLensModel: DiscoveryLensModel?
     
     
     @IBOutlet var discoverySuperView: UIView! {
@@ -65,8 +62,6 @@ class DiscoveryLensViewController: UIViewController {
             )
             swipeRightGesture.direction = .right
             discoverySuperView.addGestureRecognizer(swipeRightGesture)
-            
-            discoverySuperView.setNeedsDisplay()
         }
     }
     
@@ -97,9 +92,11 @@ class DiscoveryLensViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        discoveryLensModel =  DiscoveryLensModel(scene: createARFieldOfView())
         startSceneKitReferenceConversion()
     }
     
+    //synchronize the scenekit overlay with the camera feed to stabilize 3d models and give AR effect
     func startSceneKitReferenceConversion() {
         self.motionManager.startDeviceMotionUpdates(to: motionQueue) {
             [weak self] (motion: CMDeviceMotion?, error: Error?) in
@@ -108,25 +105,26 @@ class DiscoveryLensViewController: UIViewController {
             SCNTransaction.begin()
             SCNTransaction.disableActions = true
             let quaternion: SCNQuaternion = self!.orientationFromCMQuaternion(q: attitude.quaternion)
-            DiscoveryLensViewController.sceneKitCamera?.orientation = quaternion
+            self?.discoveryLensModel?.cameraNode?.orientation = quaternion
             SCNTransaction.commit()
         }
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        cameraViewOverlaySession()
+        if cameraViewCreated {
+            captureSession.startRunning()
+        } else {
+            startCameraViewOverlaySession()
+            cameraViewCreated = true
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if Constants.SPOOF_SERVER {
-            shapeDiscovered()
-        } else {
+        if !Constants.SPOOF_SERVER {
             startFetching()
         }
-        
         //tab bar item appearance under this specific controller
         self.tabBarController?.tabBar.tintColor = UIColor(
             colorLiteralRed: Constants.DEFAULT_BLUE[0],
@@ -140,15 +138,14 @@ class DiscoveryLensViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        sceneView.removeFromSuperview()
+        captureSession.stopRunning()
         if !Constants.SPOOF_SERVER {
             stopFetching()
         }
     }
-    
-    
+
     //initializing the feed session and affixing it as a sublayer of the CameraDiscoveryLensView layer
-    func cameraViewOverlaySession() {
+    func startCameraViewOverlaySession() {
         let deviceSession = AVCaptureDeviceDiscoverySession(deviceTypes: [.builtInDualCamera,.builtInTelephotoCamera,.builtInWideAngleCamera], mediaType: AVMediaTypeVideo, position: .unspecified)
         
         for device in (deviceSession?.devices)! {
@@ -179,62 +176,52 @@ class DiscoveryLensViewController: UIViewController {
         }
     }
     
-    //callback from server request when shape or landmark proximity is detected
-    //when testing this controller and in the protoype (before server requests) this will be called 
-    //to create a static cube in viewDidLoad
-    func shapeDiscovered() {
-        if DiscoveryLensViewController.discoveryLensModel.hasShapesInFieldOfView(){
+    
+    func createARFieldOfView() -> SCNView {
+        let sceneView = SCNView()
+        sceneView.frame = self.view.bounds
+        sceneView.backgroundColor = UIColor.clear
+        sceneView.autoenablesDefaultLighting = true
+        sceneView.allowsCameraControl = true //in the future, we may want to disable this in discovery mode
+        self.view.addSubview(sceneView)
+        
+        if Constants.DEBUG_MODE && Constants.SPOOF_SERVER && discoveryLensModel != nil &&
+            discoveryLensModel!.hasShapesInFieldOfView() {
             //under debugging and server spoof mode, we simply load the shape that is currently in the editor
-            if(Constants.DEBUG_MODE && Constants.SPOOF_SERVER) {
-                print("DEBUG INFO- Cube loaded from Canvas Editor")
-                sceneView = SCNView()
-                sceneView.frame = self.view.bounds
-                sceneView.backgroundColor = UIColor.clear
-                sceneView.autoenablesDefaultLighting = true
-                sceneView.allowsCameraControl = true //in the future, we may want to disable this in discovery mode
-                self.view.addSubview(sceneView)
-                //TODO: scene blow does not contain a cube
-                sceneView.scene = DiscoveryLensViewController.discoveryLensModel.scene
-            }
-            
+            print("DEBUG INFO- Cube loaded from Canvas Editor")
+            sceneView.scene = discoveryLensModel!.sceneView.scene
         //loads blank stub shape
         } else if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
             print("DEBUG INFO- Stub cube loaded into camera view")
-            sceneView = SCNView()
-            sceneView.frame = self.view.bounds
-            sceneView.backgroundColor = UIColor.clear
-            sceneView.autoenablesDefaultLighting = true
-            sceneView.allowsCameraControl = true //in the future, we may want to disable this in discovery mode
-            self.view.addSubview(sceneView)
             //testing default cube with images affixed as materials
             var images: [UIImage] = Array()
             images.append(UIImage(named: "AR_Sample")!)
             images.append(UIImage(named: "AR_Sample2")!)
             sceneView.scene = DiscoveryScene(scale: 1.0, withShape: Constants.Shape.Cube, withImages: images)
         } else {
-            print("No shape could be fetched in the DiscoveryLens Controller from the DiscoveryLens model")
-            
+            sceneView.scene = DiscoveryScene()
+            self.view.addSubview(sceneView)
         }
+        
+        return sceneView
     }
     
     //link nodes from scene blueprint to Discovery Lens Controller
-    public static func addDiscoveredShapeNode(shape: SCNNode) {
-        if DiscoveryLensViewController.discoveredShapes == nil {
-            DiscoveryLensViewController.discoveredShapes = Array()
-        }
-        DiscoveryLensViewController.discoveredShapes?.append(shape)
-    }
+//    public static func addDiscoveredShapeNode(shape: SCNNode) {
+//        if(Constants.DEBUG_MODE && Constants.SPOOF_SERVER) {
+//            if DiscoveryLensViewController.discoveredShapes == nil {
+//                DiscoveryLensViewController.discoveredShapes = Array()
+//            }
+//            DiscoveryLensViewController.discoveredShapes?.append(shape)
+//        }
+//    }
     
-    public static func addCameraNode(camera: SCNNode) {
-        DiscoveryLensViewController.sceneKitCamera = camera
-    }
-    
-    //converts the server response format of a shape into our model's format
-    func updateModelShape() {
-        //pass
-        
-    }
-    
+//    public static func addCameraNode(camera: SCNNode) {
+//        if(Constants.DEBUG_MODE && Constants.SPOOF_SERVER) {
+//            DiscoveryLensViewController.sceneKitCamera = camera
+//        }
+//    }
+//    
     
     func formProximityRequest() -> NSMutableURLRequest {
         let jsonBody: Dictionary<String, String> = ["lat": GlobalResources.Location.lat ,
@@ -261,6 +248,22 @@ class DiscoveryLensViewController: UIViewController {
     }
     
     
+    
+    //Given a discovery payload, we attempt to return a dictionary that represents the preassembled shape information
+    func parseJSONPayloadToDict(data: Any?) -> NSDictionary? {
+        if let unwrappedData = data as? String {
+            if let jsonData = unwrappedData.data(using: .utf8) {
+                if let shapeData = try? JSONSerialization.jsonObject(with: jsonData,
+                                                                  options: JSONSerialization.ReadingOptions.mutableContainers) {
+                    if let shapeDict = shapeData as? NSDictionary, shapeDict.count > 0 {
+                        return Optional(shapeDict)
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
     //Requesting the MakeDrop Discovery API to send nearby shapes
     func requestProximity() {
         if lastRequestReturned {
@@ -275,13 +278,30 @@ class DiscoveryLensViewController: UIViewController {
                             return
                         }
                         do {
-                            let response = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers)
-                            DispatchQueue.main.async {
-                                
-                                print("RESPONSE: \(response)")
-                                
+                            let response = try JSONSerialization.jsonObject(with: data!,
+                                                                            options: JSONSerialization.ReadingOptions.mutableContainers)
+                            if let parsedResponse = response as? NSDictionary {
+                                if let status = parsedResponse["status"] as? String {
+                                    if(status == "success") {
+                                        //successful response from the Discovery API
+                                        if let payload = self?.parseJSONPayloadToDict(data: parsedResponse["data"]) {
+                                            //main helper method for assembling shapes from the JSON Discovery response
+                                            if(Constants.DEBUG_MODE) {
+                                                print("CUBE FOUND: attempting to construct shape from API response")
+                                            }
+                                            self?.assembleShapeResponseInView(response: payload)
+                                        } else {
+                                            print("ERROR- Could not parse Discovery API Shapes payload")
+                                        }
+                                    } else {
+                                        print("ERROR- From Discovery API: \(parsedResponse["reason"] as? String)")
+                                    }
+                                } else {
+                                    print("ERROR- Could not understand Discovery API response")
+                                }
+                            } else {
+                                print("ERROR- Could not parse Discovery API JSON response to NSDictionary")
                             }
-                            
                         } catch {
                             print("ERROR - Failed to ping the discovery APIs for nearby objects")
                         }
@@ -289,6 +309,89 @@ class DiscoveryLensViewController: UIViewController {
                     task.resume()
                 }
                 self?.lastRequestReturned = true
+            }
+        }
+    }
+    
+    private func scrapeShapeType(shape discoveredShape: NSDictionary) -> Constants.Shape {
+        var shapeName: String = Constants.DEFAULT_SHAPE_NAME
+        if discoveredShape["name"] is String  {
+            if let s = discoveredShape["name"] as? String {
+                shapeName = s
+            }
+        }
+        return Constants.Shape(rawValue: shapeName) ?? Constants.DEFAULT_SHAPE_TYPE
+    }
+    
+    private func scrapeScale(shape discoveredShape: NSDictionary) -> CGFloat {
+        var shapeScale: CGFloat
+        if let scaleString = discoveredShape["scale"] as? String {
+            if let cgfloatScale = NumberFormatter().number(from: scaleString) {
+                shapeScale = CGFloat(cgfloatScale)
+            } else {
+                shapeScale = Constants.DEFAULT_SHAPE_SCALE
+            }
+        } else {
+            shapeScale = Constants.DEFAULT_SHAPE_SCALE
+        }
+        return shapeScale
+    }
+    
+    
+    private func scrapeMaterialImages(shape discoveredShape: NSDictionary) -> [UIImage] {
+        var materials : [UIImage] = Array()
+        if let materialsJSONDict = parseJSONPayloadToDict(data: discoveredShape["materials"]) {
+            for i in 0..<materialsJSONDict.count {
+                if let base64Data = materialsJSONDict["\(i)"] as? String {
+                    if let decodedString = Data.init(base64Encoded: base64Data) {
+                        if let image = UIImage(data: decodedString) {
+                            materials.append(image)
+                        } else {
+                           print("ERROR - unable to convert the decoded base64 string from the Discovery API response to a UIImage")
+                        }
+                    } else {
+                        print("ERROR - unable to decode the base64 material image data from the Discovery API response")
+                    }
+                } else {
+                    print("ERROR - unable to retrieve the base64 string from Discovery's material response")
+                }
+            }
+        }
+        return materials
+    }
+    
+    private func scrapeID(shape discoveredShape: NSDictionary) -> Int? {
+        var shapeID: Int?
+        if let idString = discoveredShape["id"] as? String {
+            if let id = NumberFormatter().number(from: idString) {
+                shapeID = Int(id)
+            }
+        }
+        return shapeID
+    }
+    
+    //convert each discovered shape from the Discovery API response to a shape with it's corresponding materials in the model
+    func assembleShapeResponseInView(response: NSDictionary) {
+        for i in 1...response.count {
+            if let discoveredShape = response["\(i)"] as? NSDictionary{
+                let type = scrapeShapeType(shape: discoveredShape)
+                let scale = scrapeScale(shape: discoveredShape)
+                let id = scrapeID(shape: discoveredShape)
+                let materialImages = scrapeMaterialImages(shape: discoveredShape)
+                let assembledShape = Constants.filledStructure(shape: type,
+                                                               ofScale: scale,
+                                                               ofID: id,
+                                                               withImages: materialImages)
+                DispatchQueue.main.async { [weak self] in
+                    
+                }
+                break;
+                
+                //notify thread dedicated to UI that model has updated shapes if new shapes
+                //have been discovered
+//                DispatchQueue.main.async { [weak self] in
+//                    self?.discoveryLensModel?.addShapeToFieldOfView(shape: assembledShape)
+//                }
             }
         }
     }
@@ -308,13 +411,13 @@ class DiscoveryLensViewController: UIViewController {
     
     //only used for server spoof mode to load shapes in from the Canvas Editor's model
     //communication of this form is not proper and will be deleted once the server-side code is written
-    public static func updateModel(discoveryLensModel: DiscoveryLensModel) {
-        if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
-            DiscoveryLensViewController.discoveryLensModel = discoveryLensModel
-        } else {
-            print("Error- This model to model communication is not permitted")
-        }
-    }
+//    public static func updateModel(discoveryLensModel: DiscoveryLensModel) {
+//        if Constants.DEBUG_MODE && Constants.SPOOF_SERVER {
+//            DiscoveryLensViewController.discoveryLensModel = discoveryLensModel
+//        } else {
+//            print("Error- This model to model communication is not permitted")
+//        }
+//    }
     
     
     

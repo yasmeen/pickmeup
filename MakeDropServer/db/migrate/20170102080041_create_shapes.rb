@@ -7,6 +7,7 @@ class CreateShapes < ActiveRecord::Migration
       t.float :latitude
       t.float :longitude
       t.boolean :public
+      t.float :scale
       t.timestamps null: false
     end
   end
