@@ -307,6 +307,7 @@ class DiscoveryLensViewController: UIViewController {
                                             //main helper method for assembling shapes from the JSON Discovery response
                                             if(Constants.DEBUG_MODE) {
                                                 print("CUBE FOUND: attempting to construct shape from API response")
+                                                //print("DATA:\n \(payload)")
                                             }
                                             self?.assembleShapeResponseInView(response: payload)
                                         }
@@ -342,12 +343,8 @@ class DiscoveryLensViewController: UIViewController {
     
     private func scrapeScale(shape discoveredShape: NSDictionary) -> CGFloat {
         var shapeScale: CGFloat
-        if let scaleString = discoveredShape["scale"] as? String {
-            if let cgfloatScale = NumberFormatter().number(from: scaleString) {
-                shapeScale = CGFloat(cgfloatScale)
-            } else {
-                shapeScale = Constants.DEFAULT_SHAPE_SCALE
-            }
+        if let scaleFloat = discoveredShape["scale"] as? Float {
+            shapeScale = CGFloat(scaleFloat)
         } else {
             shapeScale = Constants.DEFAULT_SHAPE_SCALE
         }
@@ -360,7 +357,8 @@ class DiscoveryLensViewController: UIViewController {
         if let materialsJSONDict = parseJSONPayloadToDict(data: discoveredShape["materials"]) {
             for i in 0..<materialsJSONDict.count {
                 if let base64Data = materialsJSONDict["\(i)"] as? String {
-                    if let decodedString = Data.init(base64Encoded: base64Data) {
+                    if let decodedString = Data.init(base64Encoded: base64Data,
+                                                     options: .ignoreUnknownCharacters) {
                         if let image = UIImage(data: decodedString) {
                             materials.append(image)
                         } else {
@@ -379,36 +377,39 @@ class DiscoveryLensViewController: UIViewController {
     
     private func scrapeID(shape discoveredShape: NSDictionary) -> Int? {
         var shapeID: Int?
-        if let idString = discoveredShape["id"] as? String {
-            if let id = NumberFormatter().number(from: idString) {
-                shapeID = Int(id)
-            }
+        if let idPayload = discoveredShape["id"] as? Int {
+            shapeID = idPayload
+            
         }
         return shapeID
     }
     
     //convert each discovered shape from the Discovery API response to a shape with it's corresponding materials in the model
     func assembleShapeResponseInView(response: NSDictionary) {
-        for i in 1...response.count {
-            if let discoveredShape = response["\(i)"] as? NSDictionary{
-                let type = scrapeShapeType(shape: discoveredShape)
-                let scale = scrapeScale(shape: discoveredShape)
-                let id = scrapeID(shape: discoveredShape)
-                let materialImages = scrapeMaterialImages(shape: discoveredShape)
-                let assembledShape = Constants.filledStructure(shape: type,
-                                                               ofScale: scale,
-                                                               ofID: id,
-                                                               withImages: materialImages)
-//                DispatchQueue.main.async { [weak self] in
-//                    
-//                }
-//                break;
-                
-                //notify thread dedicated to UI that model has updated shapes if new shapes
-                //have been discovered
-                DispatchQueue.main.async { [weak self] in
-                    self?.discoveryLensModel?.addShapeToFieldOfView(shape: assembledShape)
+        print("DICT: \(response)")
+        for (_, shapeMetaData) in response {
+            if let discoveredShape = parseJSONPayloadToDict(data: shapeMetaData) {
+                if let shapeInfoJSONDict = parseJSONPayloadToDict(data: discoveredShape["shape"]) {
+                    print("METADATA: \(shapeInfoJSONDict)")
+                    let type = scrapeShapeType(shape: shapeInfoJSONDict)
+                    let scale = scrapeScale(shape: shapeInfoJSONDict)
+                    let id = scrapeID(shape: shapeInfoJSONDict)
+                    print("ID: \(id)")
+                    let materialImages = scrapeMaterialImages(shape: discoveredShape)
+                    let assembledShape = Constants.filledStructure(shape: type,
+                                                                   ofScale: scale,
+                                                                   ofID: id,
+                                                                   withImages: materialImages)
+                    //notify thread dedicated to UI that model has updated shapes if new shapes
+                    //have been discovered
+                    DispatchQueue.main.async { [weak self] in
+                        self?.discoveryLensModel?.addShapeToFieldOfView(shape: assembledShape)
+                    }
+                } else {
+                    print("ERROR- could not parse discovery API response shape metadata")
                 }
+            } else {
+                print("ERROR - parsing one or more of the given shapes in the Discovery API JSON response")
             }
         }
     }

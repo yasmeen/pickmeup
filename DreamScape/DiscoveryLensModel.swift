@@ -43,8 +43,13 @@ class DiscoveryLensModel {
     func addShapeToFieldOfView(shape: Constants.filledStructure) {
         if discoveredShapes[shape] == nil {
             if let scene = sceneView.scene as? DiscoveryScene {
+                if(Constants.DEBUG_MODE) {
+                    print("DEBUG- ADDING SHAPE: \(shape.id ?? -1) TO FIELD OF VIEW")
+                }
                 discoveredShapes[shape] = scene.addDiscoveredShapeToFOV(discoveredShapes: shape)
             }
+        } else {
+            print("collision")
         }
     }
     

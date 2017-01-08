@@ -99,7 +99,6 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
         jsonBody["longitude"] = long
         jsonBody["name"] = shape.shape.rawValue
         jsonBody["face_count"] = String(shape.faceCount)
-        jsonBody["created_at"] = "TODO"
         jsonBody["public"] = "true"
         jsonBody["owner"] = "TODO"
         jsonBody["scale"] = shape.scale

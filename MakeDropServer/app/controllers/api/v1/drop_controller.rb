@@ -37,7 +37,7 @@ module Api
     def form_shape_from_request(top_level_json_data)
       shape = Hash.new
       shape["owner"] = top_level_json_data[:owner]
-      shape["name"] = top_level_json_data[:type]
+      shape["name"] = top_level_json_data[:name]
       shape["face_count"] = top_level_json_data[:face_count]
       shape["latitude"] = top_level_json_data[:latitude]
       shape["scale"] = top_level_json_data[:scale]

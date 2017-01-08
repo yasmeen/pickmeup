@@ -18,7 +18,7 @@ public class Constants {
     public static let SPOOF_SERVER: Bool = false //for now, this implies we are only working with cubes
     public static let DEFAULT_BLUE: [Float] = [0.0, 122.0/255.0, 1.0, 1.0]
     public static let CUBE_FACE_DIMENSION: Int = 300 //fresh cubes are initialized with 300x300 white materials
-    public static let PING_DISCOVERY_API_INTERVAL = 5.0
+    public static let PING_DISCOVERY_API_INTERVAL = 2.0
     public static let DEFAULT_SHAPE_SCALE: CGFloat = 1.0
     public static let DEFAULT_SHAPE_NAME: String = "Cube"
     public static let DEFAULT_SHAPE_TYPE: Constants.Shape = Constants.Shape.Cube
