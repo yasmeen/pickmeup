@@ -251,16 +251,35 @@ class DiscoveryLensViewController: UIViewController {
     
     //Given a discovery payload, we attempt to return a dictionary that represents the preassembled shape information
     func parseJSONPayloadToDict(data: Any?) -> NSDictionary? {
-        if let unwrappedData = data as? String {
-            if let jsonData = unwrappedData.data(using: .utf8) {
-                if let shapeData = try? JSONSerialization.jsonObject(with: jsonData,
-                                                                  options: JSONSerialization.ReadingOptions.mutableContainers) {
-                    if let shapeDict = shapeData as? NSDictionary, shapeDict.count > 0 {
-                        return Optional(shapeDict)
+        
+        do {
+            let convertedData =  try JSONSerialization.data(withJSONObject: data!, options: .prettyPrinted) // first of all convert json to the data
+            let text = String(data: convertedData , encoding: .utf8) // the data will be converted to the string
+            if let unwrappedData = text {
+                if let jsonData = unwrappedData.data(using: .utf8) {
+                    if let shapeData = try? JSONSerialization.jsonObject(with: jsonData,
+                                                                      options: JSONSerialization.ReadingOptions.mutableContainers) {
+                        if let shapeDict = shapeData as? NSDictionary, shapeDict.count > 0 {
+                            return Optional(shapeDict)
+                        } else {
+                            if(Constants.DEBUG_MODE) {
+                                print("No new shapes were found, response was empty")
+                            }
+                        }
+                    } else {
+                        print("ERROR - could not convert discovery data json to NSDict")
                     }
+                } else {
+                    print("ERROR - could not convert discovery data payload string to json")
                 }
+            } else {
+                print("ERROR- Could not convert discovery payload to string")
             }
+            
+        } catch let jsonError {
+            print("ERROR PARSING DISCOVERY JSON- \(jsonError)")
         }
+        
         return nil
     }
     
@@ -290,8 +309,6 @@ class DiscoveryLensViewController: UIViewController {
                                                 print("CUBE FOUND: attempting to construct shape from API response")
                                             }
                                             self?.assembleShapeResponseInView(response: payload)
-                                        } else {
-                                            print("ERROR- Could not parse Discovery API Shapes payload")
                                         }
                                     } else {
                                         print("ERROR- From Discovery API: \(parsedResponse["reason"] as? String)")
@@ -382,16 +399,16 @@ class DiscoveryLensViewController: UIViewController {
                                                                ofScale: scale,
                                                                ofID: id,
                                                                withImages: materialImages)
-                DispatchQueue.main.async { [weak self] in
-                    
-                }
-                break;
+//                DispatchQueue.main.async { [weak self] in
+//                    
+//                }
+//                break;
                 
                 //notify thread dedicated to UI that model has updated shapes if new shapes
                 //have been discovered
-//                DispatchQueue.main.async { [weak self] in
-//                    self?.discoveryLensModel?.addShapeToFieldOfView(shape: assembledShape)
-//                }
+                DispatchQueue.main.async { [weak self] in
+                    self?.discoveryLensModel?.addShapeToFieldOfView(shape: assembledShape)
+                }
             }
         }
     }

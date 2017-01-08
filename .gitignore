@@ -18,6 +18,7 @@
 
 # Don't share secret keys with the publis
 /MakeDropServer/config/*.yml
+/MakeDropServer/error.html
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

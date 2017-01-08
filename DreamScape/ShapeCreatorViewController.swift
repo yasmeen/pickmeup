@@ -102,6 +102,7 @@ class ShapeCreatorViewController: UIViewController, CAAnimationDelegate {
         jsonBody["created_at"] = "TODO"
         jsonBody["public"] = "true"
         jsonBody["owner"] = "TODO"
+        jsonBody["scale"] = shape.scale
         jsonBody["materials"] = prepareJSONImageMaterials(with: shape.materialImages)
         
         var jsonData: Data?
