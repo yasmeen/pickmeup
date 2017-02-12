@@ -24,8 +24,10 @@ public class Constants {
     public static let DEFAULT_SHAPE_TYPE: Constants.Shape = Constants.Shape.Cube
     
     // MARK: - Make & Drop v1 API endpoints
-    public static let DROP_SHAPE_ENDPOINT = "http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/drop_shape"
-    public static let DISCOVER_SHAPES_ENDPOINT = "http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/discover_shapes"
+    public static let DROP_SHAPE_ENDPOINT = "http://sample-env-1.gppwz22pes.us-west-2.elasticbeanstalk.com/api/v1/drop_controller"
+    //"http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/drop_shape"
+    public static let DISCOVER_SHAPES_ENDPOINT = "http://sample-env-1.gppwz22pes.us-west-2.elasticbeanstalk.com/api/v1/discover_controller"
+    //"http://dev-env.i42rmwfkep.us-west-2.elasticbeanstalk.com/api/v1/discover_shapes"
     public static let LOCAL_DROP_SHAPE_ENDPOINT = "http://localhost:3000/api/v1/drop_shape"
 
     // MARK: - Generic shape wrappers and helpers

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ybB-tg-IH7">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ybB-tg-IH7">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Make & Drop-->
+        <!--Pick Me Up-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ShapeCreatorViewController" customModule="MakeDrop" customModuleProvider="target" sceneMemberID="viewController">
@@ -18,75 +18,20 @@
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" userLabel="Camera Super View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Ye9-ZD-a6F" customClass="SCNView">
-                                <rect key="frame" x="16" y="181" width="343" height="258"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a side" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SFz-gl-G8P">
-                                <rect key="frame" x="16" y="119" width="187" height="39"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="187" id="Jgm-BW-FZS"/>
-                                    <constraint firstAttribute="height" constant="39" id="WNF-X2-Uch"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe up to drop" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ua4-Ur-qM4">
-                                <rect key="frame" x="85" y="571" width="205" height="39"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="Pfk-yE-Fhs"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tnr-1b-Lhj">
-                                <rect key="frame" x="155" y="499" width="64" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="HtY-01-6ka"/>
-                                    <constraint firstAttribute="height" constant="64" id="QSv-DV-owk"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9sj-R5-8U0">
+                                <rect key="frame" x="0.0" y="64" width="375" height="567"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rn8-QQ-YJe">
-                                <rect key="frame" x="329" y="72" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="5yj-OS-e2j"/>
-                                    <constraint firstAttribute="height" constant="30" id="SZv-Tx-dqL"/>
-                                </constraints>
-                                <state key="normal" title="Button" image="drop_settings"/>
-                                <connections>
-                                    <segue destination="rm0-4l-LBZ" kind="show" identifier="editDropSettings" id="w64-9D-O5A"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="top" secondItem="Tnr-1b-Lhj" secondAttribute="bottom" constant="8" symbolic="YES" id="Ars-jB-2UR"/>
-                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="top" secondItem="rn8-QQ-YJe" secondAttribute="bottom" constant="79" id="Dv3-k1-Efz"/>
-                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="top" secondItem="SFz-gl-G8P" secondAttribute="bottom" constant="23" id="L4j-HG-bCl"/>
-                            <constraint firstItem="SFz-gl-G8P" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="55" id="NMo-Pa-sxj"/>
-                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="centerX" secondItem="Ye9-ZD-a6F" secondAttribute="centerX" id="QSW-77-muA"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ua4-Ur-qM4" secondAttribute="bottom" constant="8" symbolic="YES" id="SqF-OB-WeG"/>
-                            <constraint firstItem="rn8-QQ-YJe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="WYD-zP-pdh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="SFz-gl-G8P" secondAttribute="trailing" constant="156" id="ckz-Nb-4pp"/>
-                            <constraint firstItem="Tnr-1b-Lhj" firstAttribute="centerX" secondItem="Ua4-Ur-qM4" secondAttribute="centerX" id="dTw-wH-hxO"/>
-                            <constraint firstItem="Ua4-Ur-qM4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mwt-C7-iIp"/>
-                            <constraint firstItem="rn8-QQ-YJe" firstAttribute="trailing" secondItem="Ye9-ZD-a6F" secondAttribute="trailing" id="pUn-d7-DrO"/>
-                            <constraint firstItem="SFz-gl-G8P" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sxu-NJ-a3a"/>
-                            <constraint firstItem="Ye9-ZD-a6F" firstAttribute="leading" secondItem="SFz-gl-G8P" secondAttribute="leading" id="uXH-ld-lt4"/>
-                            <constraint firstItem="Tnr-1b-Lhj" firstAttribute="top" secondItem="Ye9-ZD-a6F" secondAttribute="bottom" constant="60" id="zGm-ck-82n"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Make &amp; Drop" id="owE-TT-dNc"/>
+                    <navigationItem key="navigationItem" title="Pick Me Up" id="owE-TT-dNc"/>
                     <connections>
                         <outlet property="shapeCreatorSuperView" destination="8bC-Xf-vdC" id="LbS-ra-8dn"/>
-                        <outlet property="sideSelector" destination="Ye9-ZD-a6F" id="Qvb-Jw-cwC"/>
-                        <outlet property="upArrowSprite" destination="Tnr-1b-Lhj" id="2ME-zh-NCY"/>
                         <segue destination="hQd-MA-hZp" kind="show" identifier="annotateShape" id="JFN-G9-Y5C"/>
                     </connections>
                 </viewController>
@@ -249,7 +194,7 @@
                                     <action selector="submitAnnotation:" destination="hQd-MA-hZp" eventType="touchUpInside" id="QA7-5r-ddE"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cube Surface " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVq-UV-uMf">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Editor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVq-UV-uMf">
                                 <rect key="frame" x="16" y="72" width="300" height="53"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
@@ -338,8 +283,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="WGQ-Cs-mXJ" kind="relationship" relationship="viewControllers" id="sGh-2S-POp"/>
-                        <segue destination="oHq-xB-Pb8" kind="relationship" relationship="viewControllers" id="sAz-9J-JB9"/>
                         <segue destination="EIR-1s-yfR" kind="relationship" relationship="viewControllers" id="ikk-pL-az3"/>
+                        <segue destination="oHq-xB-Pb8" kind="relationship" relationship="viewControllers" id="sAz-9J-JB9"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sr4-xD-VAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -352,7 +297,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EIR-1s-yfR" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Edit" image="tab_bar_editor" selectedImage="tab_bar_editor" id="Sbg-qU-7TU"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="v0I-GU-XfV">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="v0I-GU-XfV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -377,21 +322,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zJZ-T4-CVg">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </mapView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WAf-g0-eDX">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="zJZ-T4-CVg" firstAttribute="top" secondItem="zoa-tn-ebK" secondAttribute="top" id="BvD-Ki-oF0"/>
-                            <constraint firstAttribute="bottom" secondItem="zJZ-T4-CVg" secondAttribute="bottom" id="K4R-yW-bHG"/>
-                            <constraint firstItem="zJZ-T4-CVg" firstAttribute="leading" secondItem="zoa-tn-ebK" secondAttribute="leading" id="nic-9F-GwQ"/>
-                            <constraint firstAttribute="trailing" secondItem="zJZ-T4-CVg" secondAttribute="trailing" id="oB1-F8-HcY"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Find" image="tab_bar_finder" selectedImage="tab_bar_finder" id="cEV-Z6-jW0"/>
                     <connections>
-                        <outlet property="finderMapView" destination="zJZ-T4-CVg" id="aOT-Vl-Ngp"/>
                         <outlet property="finderSuperView" destination="zoa-tn-ebK" id="ZbK-YP-wxq"/>
                     </connections>
                 </viewController>
@@ -401,15 +341,14 @@
         </scene>
     </scenes>
     <resources>
-        <image name="drop_settings" width="64" height="64"/>
         <image name="picker_black" width="128" height="128"/>
         <image name="picker_blue" width="64" height="64"/>
         <image name="picker_eraser" width="200" height="192"/>
         <image name="picker_green" width="64" height="64"/>
         <image name="picker_red" width="64" height="64"/>
         <image name="picker_yellow" width="64" height="64"/>
-        <image name="tab_bar_discovery" width="29" height="29"/>
-        <image name="tab_bar_editor" width="29" height="29"/>
-        <image name="tab_bar_finder" width="29" height="29"/>
+        <image name="tab_bar_discovery" width="30" height="30"/>
+        <image name="tab_bar_editor" width="30" height="30"/>
+        <image name="tab_bar_finder" width="30" height="30"/>
     </resources>
 </document>
